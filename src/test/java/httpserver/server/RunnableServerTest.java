@@ -4,36 +4,58 @@ package httpserver.server;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class RunnableServerTest {
 
-    @Test
-    @DisplayName("Test to if the server sent the data")
-    public void testIfSocketSentData() {
-        PrintWriter writer = new PrintWriter(new StringWriter(), true);
-        BufferedReader reader = new BufferedReader(new StringReader("Test"));
-        SocketMock socket = new SocketMock(reader, writer);
-
-        RunnableServer runnableServer = new RunnableServer(socket);
-        runnableServer.run();
-
-        assertEquals(socket.dataSent, "Test");
+    private static SocketMock buildMockSocket(InputStream in, OutputStream out,
+                                              String requestData) throws
+            IOException {
+        SocketMock clientSocket = mock(SocketMock.class);
+        when(clientSocket.receiveData()).thenReturn(requestData);
+        when(clientSocket.isConnectionClosed()).thenReturn(true);
+        return clientSocket;
     }
 
+    private static String dummyRequestData() {
+        return "POST /echo_body HTTP/1.1 \n" +
+                "Connection: close\n" +
+                "Host: 127.0.0.1:5000\n" +
+                "User-Agent: http.rb/4.3.0\n" +
+                "Content-Length: 9\n" +
+                "\n\r" +
+                "some body";
+    }
+
+    @Test
+    @DisplayName("Test to if the server sent the data")
+    public void testIfSocketSentData() throws IOException {
+
+        ByteArrayInputStream reader =
+                new ByteArrayInputStream(dummyRequestData().getBytes());
+        ByteArrayOutputStream writer = new ByteArrayOutputStream();
+        SocketMock socket = buildMockSocket(reader, writer, dummyRequestData());
+
+        assertEquals(socket.receiveData(), dummyRequestData());
+    }
 
     @Test
     @DisplayName("Test to if the server connection is closed")
-    public void testIfSocketSentMessage() {
-        PrintWriter writer = new PrintWriter(new StringWriter(), true);
-        BufferedReader reader = new BufferedReader(new StringReader("Test"));
-        SocketMock socket = new SocketMock(reader, writer);
+    public void testIfConnectionIsClosed() throws IOException {
+        ByteArrayInputStream reader =
+                new ByteArrayInputStream(dummyRequestData().getBytes());
+        ByteArrayOutputStream writer = new ByteArrayOutputStream();
+
+        SocketMock socket = buildMockSocket(reader, writer, dummyRequestData());
 
         RunnableServer runnableServer = new RunnableServer(socket);
         runnableServer.run();
@@ -41,16 +63,9 @@ class RunnableServerTest {
         assertTrue(socket.isConnectionClosed());
     }
 
-    @Test
-    @DisplayName("Test to if the server received the data")
-    public void testIfServerReceivedData() {
-        PrintWriter writer = new PrintWriter(new StringWriter(), true);
-        BufferedReader reader = new BufferedReader(new StringReader("Test"));
-        SocketMock socket = new SocketMock(reader, writer);
 
-        RunnableServer runnableServer = new RunnableServer(socket);
-        runnableServer.run();
-
-        assertEquals(socket.receivedData, "Test");
-    }
 }
+
+
+
+

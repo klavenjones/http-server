@@ -2,20 +2,21 @@ package httpserver.server;
 
 import httpserver.interfaces.ISocket;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 
 public class SocketMock implements ISocket {
 
     public boolean connectionClosed = false;
-    public BufferedReader reader;
-    public PrintWriter writer;
+    public InputStream reader;
+    public OutputStream writer;
     public String dataSent;
-    public  String receivedData;
+    public String receivedData;
 
 
-    public SocketMock(BufferedReader input, PrintWriter output) {
+    public SocketMock(InputStream input, OutputStream output) {
         this.reader = input;
         this.writer = output;
     }
@@ -23,19 +24,23 @@ public class SocketMock implements ISocket {
     @Override
     public String receiveData() {
         try {
-            receivedData = reader.readLine();
+            StringBuilder clientData = new StringBuilder();
+            while (reader.available() > 0) {
+                clientData.append((char) reader.read());
+            }
+            receivedData = clientData.toString();
             dataSent = receivedData;
-            return reader.readLine();
+            return receivedData;
         } catch (IOException e) {
-            System.err.println("Error with Input");
+            e.printStackTrace();
+            return e.toString();
         }
-        return null;
     }
 
     @Override
-    public void sendData(String message) {
+    public void sendData(String message) throws IOException {
         dataSent = receivedData;
-        writer.write(message);
+        writer.write(Integer.parseInt(message));
     }
 
     @Override
