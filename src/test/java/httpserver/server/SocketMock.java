@@ -2,7 +2,6 @@ package httpserver.server;
 
 import httpserver.interfaces.ISocket;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,11 +13,11 @@ public class SocketMock implements ISocket {
     public InputStream reader;
     public OutputStream writer;
     public String dataSent;
-    public  String receivedData;
+    public String receivedData;
 
 
-    public SocketMock(InputStream reader, OutputStream output) {
-        this.reader = reader;
+    public SocketMock(InputStream input, OutputStream output) {
+        this.reader = input;
         this.writer = output;
     }
 
@@ -26,7 +25,7 @@ public class SocketMock implements ISocket {
     public String receiveData() {
         try {
             StringBuilder clientData = new StringBuilder();
-            while(reader.available() > 0){
+            while (reader.available() > 0) {
                 clientData.append((char) reader.read());
             }
             receivedData = clientData.toString();
