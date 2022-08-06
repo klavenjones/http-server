@@ -4,13 +4,12 @@ package httpserver.server;
 import httpserver.interfaces.ISocket;
 import httpserver.request.Request;
 
+import java.util.HashMap;
+
 import static httpserver.constants.HTTPLines.CRLF;
 
 
 public class RunnableServer implements Runnable {
-    private static final int SP = 0x20; // 32
-    private static final int CR = 0x0D; // 13
-    private static final int LF = 0x0A; // 10
     public ISocket socketWrapper;
     public Request request;
 
@@ -68,9 +67,9 @@ public class RunnableServer implements Runnable {
         return response.toString();
     }
 
-    public String dummyMethodNotAllowedResponse(String method) {
+    public String dummyMethodNotAllowedResponse(String requestMethod) {
         StringBuilder response = new StringBuilder();
-        if(!method.equals("HEAD")){
+        if (!requestMethod.equals("HEAD")) {
             response.append("HTTP/1.1 405 Method Not Allowed" + CRLF);
         } else {
             response.append("HTTP/1.1 200 OK" + CRLF);
@@ -89,7 +88,7 @@ public class RunnableServer implements Runnable {
     }
 
 
-    public String dummyEcho(){
+    public String dummyEcho() {
         StringBuilder response = new StringBuilder();
         response.append("HTTP/1.1 200 OK" + CRLF);
         response.append(CRLF);
@@ -98,7 +97,7 @@ public class RunnableServer implements Runnable {
     }
 
 
-    public String handleResponse(String route, String method) {
+    public String handleResponse(String route, String requestMethod) {
         switch (route) {
             case "/simple_get":
                 return dummyResponse();
@@ -111,7 +110,7 @@ public class RunnableServer implements Runnable {
             case "/method_options2":
                 return dummyAllowMoreMethodResponse();
             case "/head_request":
-                return dummyMethodNotAllowedResponse(method);
+                return dummyMethodNotAllowedResponse(requestMethod);
             case "/echo_body":
                 return dummyEcho();
             default:
@@ -127,9 +126,10 @@ public class RunnableServer implements Runnable {
             String clientMessage = socketWrapper.receiveData();
             if (clientMessage != null) {
                 request = new Request(clientMessage);
-                request.getRequestBody();
+                System.out.println("Client Connected: \n" + clientMessage);
                 socketWrapper.sendData(
-                        handleResponse(request.getRequestPath(), request.getRequestMethod()));
+                        handleResponse(request.getRequestPath(),
+                                request.getRequestMethod()));
             }
 
 

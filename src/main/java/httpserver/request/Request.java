@@ -24,7 +24,7 @@ public class Request {
     }
 
     public String getRequestBody() {
-        return incomingRequest.split(CRLF+CRLF, 2)[1];
+        return incomingRequest.split(CRLF + CRLF, 2)[1];
     }
 
 }
