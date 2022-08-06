@@ -68,9 +68,13 @@ public class RunnableServer implements Runnable {
         return response.toString();
     }
 
-    public String dummyMethodNotAllowedResponse() {
+    public String dummyMethodNotAllowedResponse(String method) {
         StringBuilder response = new StringBuilder();
-        response.append("HTTP/1.1 405 Method Not Allowed" + CRLF);
+        if(!method.equals("HEAD")){
+            response.append("HTTP/1.1 405 Method Not Allowed" + CRLF);
+        } else {
+            response.append("HTTP/1.1 200 OK" + CRLF);
+        }
         response.append("Allow: HEAD, OPTIONS" + CRLF);
         response.append(CRLF);
 
@@ -81,16 +85,24 @@ public class RunnableServer implements Runnable {
         StringBuilder response = new StringBuilder();
         response.append("HTTP/1.1 404 Not Found" + CRLF);
         response.append(CRLF);
-
         return response.toString();
     }
 
 
-    public String handleResponse(String route) {
+    public String dummyEcho(){
+        StringBuilder response = new StringBuilder();
+        response.append("HTTP/1.1 200 OK" + CRLF);
+        response.append(CRLF);
+        response.append(request.getRequestBody());
+        return response.toString();
+    }
+
+
+    public String handleResponse(String route, String method) {
         switch (route) {
             case "/simple_get":
                 return dummyResponse();
-            case "simple_get_with_body":
+            case "/simple_get_with_body":
                 return dummyWithBodyResponse();
             case "/redirect":
                 return dummyLocationResponse();
@@ -99,7 +111,9 @@ public class RunnableServer implements Runnable {
             case "/method_options2":
                 return dummyAllowMoreMethodResponse();
             case "/head_request":
-                return dummyMethodNotAllowedResponse();
+                return dummyMethodNotAllowedResponse(method);
+            case "/echo_body":
+                return dummyEcho();
             default:
                 return dummyNotFoundResponse();
         }
@@ -109,13 +123,13 @@ public class RunnableServer implements Runnable {
     @Override
     public void run() {
         try {
+            HashMap<String, String> headers = new HashMap<>();
             String clientMessage = socketWrapper.receiveData();
             if (clientMessage != null) {
                 request = new Request(clientMessage);
-                System.out.println("This is the method of the request " +
-                        request.getRequestMethod() + "\n");
+                request.getRequestBody();
                 socketWrapper.sendData(
-                        handleResponse(request.getRequestPath()));
+                        handleResponse(request.getRequestPath(), request.getRequestMethod()));
             }
 
 
