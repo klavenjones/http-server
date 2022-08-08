@@ -13,7 +13,7 @@ class RequestTest {
                 + "Connection: close\n" +
                 "Host: 127.0.0.1:5000\n" +
                 "User-Agent: http.rb/4.3.0\n" +
-                "Content-Length: 9\n" +
+                "Content-Length: 9\r\n" +
                 "\r\n" +
                 "some body";
     }

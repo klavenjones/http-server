@@ -4,13 +4,12 @@ package httpserver.server;
 import httpserver.interfaces.ISocket;
 import httpserver.request.Request;
 
+import java.util.HashMap;
+
 import static httpserver.constants.HTTPLines.CRLF;
 
 
 public class RunnableServer implements Runnable {
-    private static final int SP = 0x20; // 32
-    private static final int CR = 0x0D; // 13
-    private static final int LF = 0x0A; // 10
     public ISocket socketWrapper;
     public Request request;
 
@@ -68,9 +67,13 @@ public class RunnableServer implements Runnable {
         return response.toString();
     }
 
-    public String dummyMethodNotAllowedResponse() {
+    public String dummyMethodNotAllowedResponse(String requestMethod) {
         StringBuilder response = new StringBuilder();
-        response.append("HTTP/1.1 405 Method Not Allowed" + CRLF);
+        if (!requestMethod.equals("HEAD")) {
+            response.append("HTTP/1.1 405 Method Not Allowed" + CRLF);
+        } else {
+            response.append("HTTP/1.1 200 OK" + CRLF);
+        }
         response.append("Allow: HEAD, OPTIONS" + CRLF);
         response.append(CRLF);
 
@@ -81,16 +84,24 @@ public class RunnableServer implements Runnable {
         StringBuilder response = new StringBuilder();
         response.append("HTTP/1.1 404 Not Found" + CRLF);
         response.append(CRLF);
-
         return response.toString();
     }
 
 
-    public String handleResponse(String route) {
+    public String dummyEcho() {
+        StringBuilder response = new StringBuilder();
+        response.append("HTTP/1.1 200 OK" + CRLF);
+        response.append(CRLF);
+        response.append(request.getRequestBody());
+        return response.toString();
+    }
+
+
+    public String handleResponse(String route, String requestMethod) {
         switch (route) {
             case "/simple_get":
                 return dummyResponse();
-            case "simple_get_with_body":
+            case "/simple_get_with_body":
                 return dummyWithBodyResponse();
             case "/redirect":
                 return dummyLocationResponse();
@@ -99,7 +110,9 @@ public class RunnableServer implements Runnable {
             case "/method_options2":
                 return dummyAllowMoreMethodResponse();
             case "/head_request":
-                return dummyMethodNotAllowedResponse();
+                return dummyMethodNotAllowedResponse(requestMethod);
+            case "/echo_body":
+                return dummyEcho();
             default:
                 return dummyNotFoundResponse();
         }
@@ -109,13 +122,14 @@ public class RunnableServer implements Runnable {
     @Override
     public void run() {
         try {
+            HashMap<String, String> headers = new HashMap<>();
             String clientMessage = socketWrapper.receiveData();
             if (clientMessage != null) {
                 request = new Request(clientMessage);
-                System.out.println("This is the method of the request " +
-                        request.getRequestMethod() + "\n");
+                System.out.println("Client Connected: \n" + clientMessage);
                 socketWrapper.sendData(
-                        handleResponse(request.getRequestPath()));
+                        handleResponse(request.getRequestPath(),
+                                request.getRequestMethod()));
             }
 
 
