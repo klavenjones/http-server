@@ -6,7 +6,6 @@ import static httpserver.constants.HTTPLines.SP;
 public class Request {
 
     String incomingRequest;
-
     public Request(String incomingData) {
         this.incomingRequest = incomingData;
     }
@@ -26,5 +25,6 @@ public class Request {
     public String getRequestBody() {
         return incomingRequest.split(CRLF + CRLF, 2)[1];
     }
+
 
 }

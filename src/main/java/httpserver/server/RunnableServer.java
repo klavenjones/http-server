@@ -1,6 +1,8 @@
 package httpserver.server;
 
 
+import httpserver.handlers.SimpleGet;
+import httpserver.interfaces.IHandler;
 import httpserver.interfaces.ISocket;
 import httpserver.request.Request;
 
@@ -100,9 +102,11 @@ public class RunnableServer implements Runnable {
     public String handleResponse(String route, String requestMethod) {
         switch (route) {
             case "/simple_get":
-                return dummyResponse();
+                IHandler simpleGet = new SimpleGet();
+                return simpleGet.handle();
             case "/simple_get_with_body":
-                return dummyWithBodyResponse();
+                IHandler simpleGetWithBody = new SimpleGet("Hello world");
+                return simpleGetWithBody.handle();
             case "/redirect":
                 return dummyLocationResponse();
             case "/method_options":
