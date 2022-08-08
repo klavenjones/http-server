@@ -15,6 +15,13 @@ class OptionsTest {
         String statusLine = optionsHandler.handle().split(CRLF)[0];
         assertEquals(statusLine, "HTTP/1.1 200 OK");
     }
+    @Test
+    @DisplayName("Should return 405 Method Not Allowed")
+    public void testIfHandlerSends405StatusLine() {
+        Options optionsHandler = new Options("OPTIONS, HEAD");
+        String statusLine = optionsHandler.handle("GET").split(CRLF)[0];
+        assertEquals(statusLine, "HTTP/1.1 405 Method Not Allowed");
+    }
 
     @Test
     @DisplayName("Should test for proper Allow Header")

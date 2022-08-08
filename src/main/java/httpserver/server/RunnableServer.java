@@ -85,7 +85,8 @@ public class RunnableServer implements Runnable {
                         new Options("OPTIONS, GET, HEAD, PUT, POST");
                 return optionsHandlerTwo.handle();
             case "/head_request":
-                return dummyMethodNotAllowedResponse(requestMethod);
+                Options optionsHandlerThree = new Options("OPTIONS, HEAD");
+                return optionsHandlerThree.handle(request.getRequestMethod());
             case "/echo_body":
                 return dummyEcho();
             default:
