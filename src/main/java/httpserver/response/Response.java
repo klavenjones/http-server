@@ -3,7 +3,7 @@ package httpserver.response;
 import httpserver.constants.StatusCode;
 
 import static httpserver.constants.HTTPLines.CRLF;
-import static httpserver.constants.HTTPLines.DEFUALT_VERSION;
+import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
 import static httpserver.constants.HTTPLines.SP;
 
 
@@ -13,7 +13,7 @@ public class Response {
 
     public void buildResponse(StatusCode code) {
         this.statusCode = code.code;
-        statusLine = DEFUALT_VERSION + SP + this.statusCode + SP + code + CRLF;
+        statusLine = DEFAULT_VERSION + SP + this.statusCode + SP + code + CRLF;
     }
     public int getStatusCode() {
         return statusCode;
