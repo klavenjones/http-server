@@ -1,7 +1,9 @@
 package httpserver.server;
 
 
+import httpserver.handlers.NotAllowed;
 import httpserver.handlers.Options;
+import httpserver.handlers.OptionsTwo;
 import httpserver.handlers.Redirect;
 import httpserver.handlers.SimpleGet;
 import httpserver.interfaces.IHandler;
@@ -70,23 +72,23 @@ public class RunnableServer implements Runnable {
         switch (route) {
             case "/simple_get":
                 IHandler simpleGet = new SimpleGet();
-                return simpleGet.handle();
+                return simpleGet.handle(request.getRequestMethod());
             case "/simple_get_with_body":
                 IHandler simpleGetWithBody = new SimpleGet("Hello world");
-                return simpleGetWithBody.handle();
+                return simpleGetWithBody.handle(request.getRequestMethod());
             case "/redirect":
                 IHandler redirect = new Redirect();
-                return redirect.handle();
+                return redirect.handle(request.getRequestMethod());
             case "/method_options":
-                IHandler optionsHandler = new Options("OPTIONS, GET, HEAD");
-                return optionsHandler.handle();
+                IHandler optionsHandler = new Options();
+                return optionsHandler.handle(request.getRequestMethod());
             case "/method_options2":
                 IHandler optionsHandlerTwo =
-                        new Options("OPTIONS, GET, HEAD, PUT, POST");
-                return optionsHandlerTwo.handle();
+                        new OptionsTwo();
+                return optionsHandlerTwo.handle(request.getRequestMethod());
             case "/head_request":
-                Options optionsHandlerThree = new Options("OPTIONS, HEAD");
-                return optionsHandlerThree.handle(request.getRequestMethod());
+                IHandler methodsNotAllowed = new NotAllowed();
+                return methodsNotAllowed.handle(request.getRequestMethod());
             case "/echo_body":
                 return dummyEcho();
             default:
@@ -106,6 +108,7 @@ public class RunnableServer implements Runnable {
                 socketWrapper.sendData(
                         handleResponse(request.getRequestPath(),
                                 request.getRequestMethod()));
+
             }
 
 

@@ -12,7 +12,7 @@ class SimpleGetTest {
     @DisplayName("Should return the response Status Line")
     public void testIfHandlerReturnsStatusLine() {
         SimpleGet simpleGetHandler = new SimpleGet();
-        assertEquals(simpleGetHandler.handle(),
+        assertEquals(simpleGetHandler.handle("GET"),
                 "HTTP/1.1 200 OK" + CRLF + CRLF);
     }
 
@@ -20,7 +20,7 @@ class SimpleGetTest {
     @DisplayName("Should return the response with body")
     public void testIfHandlerReturnsResponseWithBody() {
         SimpleGet simpleGetHandler = new SimpleGet("Hello world");
-        assertEquals(simpleGetHandler.handle(),
+        assertEquals(simpleGetHandler.handle("GET"),
                 "HTTP/1.1 200 OK" + CRLF + CRLF + "Hello world");
     }
 

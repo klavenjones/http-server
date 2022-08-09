@@ -12,7 +12,7 @@ class RedirectTest {
     @DisplayName("Should return the appropriate Status Line response")
     public void testIfHandlerReturnsCorrectStatusLine() {
         IHandler redirectHandler = new Redirect();
-        String statusLine = redirectHandler.handle().split(CRLF)[0];
+        String statusLine = redirectHandler.handle("GET").split(CRLF)[0];
         assertEquals(statusLine, "HTTP/1.1 301 Moved Permanently");
     }
 
@@ -20,7 +20,7 @@ class RedirectTest {
     @DisplayName("Should return the Location Header with the correct url")
     public void testIfHandlerReturnsTheCorrectHeader() {
         IHandler redirectHandler = new Redirect();
-        String locationLine = redirectHandler.handle().split(CRLF)[1];
+        String locationLine = redirectHandler.handle("GET").split(CRLF)[2];
         assertEquals(locationLine,
                 "Location: http://127.0.0.1:5000/simple_get");
     }

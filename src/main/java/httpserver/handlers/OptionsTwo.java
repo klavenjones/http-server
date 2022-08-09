@@ -7,7 +7,7 @@ import java.util.List;
 
 import static httpserver.constants.HTTPLines.CRLF;
 
-public class Options implements IHandler {
+public class OptionsTwo implements IHandler {
 
     private final StringBuilder response = new StringBuilder();
 
@@ -42,7 +42,7 @@ public class Options implements IHandler {
     }
 
     public enum AcceptedMethods {
-        GET, HEAD, OPTIONS
+        GET, HEAD, OPTIONS, PUT, POST
     }
 
 }
