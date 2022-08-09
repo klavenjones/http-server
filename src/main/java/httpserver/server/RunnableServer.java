@@ -1,6 +1,8 @@
 package httpserver.server;
 
 
+import httpserver.handlers.Options;
+import httpserver.handlers.Redirect;
 import httpserver.handlers.SimpleGet;
 import httpserver.interfaces.IHandler;
 import httpserver.interfaces.ISocket;
@@ -24,41 +26,6 @@ public class RunnableServer implements Runnable {
         this.socketWrapper = socket;
     }
 
-    public String dummyResponse() {
-        StringBuilder response = new StringBuilder();
-        response.append("HTTP/1.1 200 OK" + CRLF);
-        response.append(CRLF);
-
-        return response.toString();
-    }
-
-    public String dummyWithBodyResponse() {
-        StringBuilder response = new StringBuilder();
-        response.append("HTTP/1.1 200 OK" + CRLF);
-        response.append(CRLF);
-        response.append("Hello world");
-
-        return response.toString();
-    }
-
-    public String dummyLocationResponse() {
-        StringBuilder response = new StringBuilder();
-        response.append("HTTP/1.1 301 Moved Permanently" + CRLF);
-        response.append("Location: http://127.0.0.1:5000/simple_get" + CRLF);
-        response.append(CRLF);
-
-        return response.toString();
-    }
-
-
-    public String dummyAllowThreeMethodsResponse() {
-        StringBuilder response = new StringBuilder();
-        response.append("HTTP/1.1 200 OK" + CRLF);
-        response.append("Allow: OPTIONS, GET, HEAD" + CRLF);
-        response.append(CRLF);
-
-        return response.toString();
-    }
 
     public String dummyAllowMoreMethodResponse() {
         StringBuilder response = new StringBuilder();
@@ -108,13 +75,18 @@ public class RunnableServer implements Runnable {
                 IHandler simpleGetWithBody = new SimpleGet("Hello world");
                 return simpleGetWithBody.handle();
             case "/redirect":
-                return dummyLocationResponse();
+                IHandler redirect = new Redirect();
+                return redirect.handle();
             case "/method_options":
-                return dummyAllowThreeMethodsResponse();
+                IHandler optionsHandler = new Options("OPTIONS, GET, HEAD");
+                return optionsHandler.handle();
             case "/method_options2":
-                return dummyAllowMoreMethodResponse();
+                IHandler optionsHandlerTwo =
+                        new Options("OPTIONS, GET, HEAD, PUT, POST");
+                return optionsHandlerTwo.handle();
             case "/head_request":
-                return dummyMethodNotAllowedResponse(requestMethod);
+                Options optionsHandlerThree = new Options("OPTIONS, HEAD");
+                return optionsHandlerThree.handle(request.getRequestMethod());
             case "/echo_body":
                 return dummyEcho();
             default:
