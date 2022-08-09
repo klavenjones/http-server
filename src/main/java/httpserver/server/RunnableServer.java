@@ -1,6 +1,7 @@
 package httpserver.server;
 
 
+import httpserver.handlers.EchoHandler;
 import httpserver.handlers.NotAllowed;
 import httpserver.handlers.Options;
 import httpserver.handlers.OptionsTwo;
@@ -28,42 +29,10 @@ public class RunnableServer implements Runnable {
         this.socketWrapper = socket;
     }
 
-
-    public String dummyAllowMoreMethodResponse() {
-        StringBuilder response = new StringBuilder();
-        response.append("HTTP/1.1 200 OK" + CRLF);
-        response.append("Allow: OPTIONS, GET, HEAD, PUT, POST" + CRLF);
-        response.append(CRLF);
-
-        return response.toString();
-    }
-
-    public String dummyMethodNotAllowedResponse(String requestMethod) {
-        StringBuilder response = new StringBuilder();
-        if (!requestMethod.equals("HEAD")) {
-            response.append("HTTP/1.1 405 Method Not Allowed" + CRLF);
-        } else {
-            response.append("HTTP/1.1 200 OK" + CRLF);
-        }
-        response.append("Allow: HEAD, OPTIONS" + CRLF);
-        response.append(CRLF);
-
-        return response.toString();
-    }
-
     public String dummyNotFoundResponse() {
         StringBuilder response = new StringBuilder();
         response.append("HTTP/1.1 404 Not Found" + CRLF);
         response.append(CRLF);
-        return response.toString();
-    }
-
-
-    public String dummyEcho() {
-        StringBuilder response = new StringBuilder();
-        response.append("HTTP/1.1 200 OK" + CRLF);
-        response.append(CRLF);
-        response.append(request.getRequestBody());
         return response.toString();
     }
 
@@ -90,7 +59,9 @@ public class RunnableServer implements Runnable {
                 IHandler methodsNotAllowed = new NotAllowed();
                 return methodsNotAllowed.handle(request.getRequestMethod());
             case "/echo_body":
-                return dummyEcho();
+                IHandler echoHandler = new EchoHandler(
+                        request.getRequestBody());
+                return echoHandler.handle("POST");
             default:
                 return dummyNotFoundResponse();
         }
