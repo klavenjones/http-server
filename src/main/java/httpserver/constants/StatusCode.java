@@ -1,13 +1,13 @@
 package httpserver.constants;
 
 public enum StatusCode {
-    OK(200),
-    NOT_FOUND(404),
-    Moved_Permanently(301);
+    OK("200 OK"),
+    NOT_FOUND("404 Not Found"),
+    Moved_Permanently("301 Moved Permanently");
 
-    public final int code;
+    public final String code;
 
-    StatusCode(int statusCode) {
+    StatusCode(String statusCode) {
         this.code = statusCode;
     }
 
