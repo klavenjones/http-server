@@ -1,27 +1,15 @@
 package httpserver.response;
 
-import httpserver.constants.StatusCode;
-
-import static httpserver.constants.HTTPLines.CRLF;
-import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
-import static httpserver.constants.HTTPLines.SP;
-
 
 public class Response {
-    public int statusCode;
-    public String statusLine;
+    public String status;
+    public String body;
+    public String headers;
 
-    public void buildResponse(StatusCode code) {
-        this.statusCode = code.code;
-        statusLine = DEFAULT_VERSION + SP + this.statusCode + SP + code + CRLF;
+
+    public Response(String status, String body, String headers) {
+        this.status = status;
+        this.body = body;
+        this.headers = headers;
     }
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public String getStatusLine() {
-        return statusLine;
-    }
-
-
 }
