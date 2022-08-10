@@ -1,6 +1,7 @@
 package httpserver.handlers;
 
 import httpserver.interfaces.IHandler;
+import httpserver.request.Request;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,9 +15,9 @@ public class Redirect implements IHandler {
     }
 
     @Override
-    public String handle(String methodFromClient) {
+    public String handle(Request request) {
         StringBuilder response = new StringBuilder();
-        if (isMethodAllowed(methodFromClient)) {
+        if (isMethodAllowed(request.method)) {
             response.append("HTTP/1.1 301 Moved Permanently" + CRLF);
         } else {
             response.append("HTTP/1.1 405 Method Not Allowed" + CRLF);

@@ -11,13 +11,12 @@ import httpserver.handlers.SimpleGet;
 import httpserver.interfaces.IHandler;
 import httpserver.interfaces.ISocket;
 import httpserver.request.Request;
-
-import java.util.HashMap;
+import httpserver.request.RequestParser;
 
 
 public class RunnableServer implements Runnable {
     public ISocket socketWrapper;
-    public Request request;
+    public RequestParser requestParser;
 
 
     public RunnableServer(ISocket socket) {
@@ -25,31 +24,30 @@ public class RunnableServer implements Runnable {
     }
 
 
-    public String handleResponse(String route, String requestMethod) {
-        switch (route) {
+    public String handleResponse(Request request) {
+        switch (request.path) {
             case "/simple_get":
                 IHandler simpleGet = new SimpleGet();
-                return simpleGet.handle(request.getRequestMethod());
+                return simpleGet.handle(request);
             case "/simple_get_with_body":
                 IHandler simpleGetWithBody = new SimpleGet("Hello world");
-                return simpleGetWithBody.handle(request.getRequestMethod());
+                return simpleGetWithBody.handle(request);
             case "/redirect":
                 IHandler redirect = new Redirect();
-                return redirect.handle(request.getRequestMethod());
+                return redirect.handle(request);
             case "/method_options":
                 IHandler optionsHandler = new Options();
-                return optionsHandler.handle(request.getRequestMethod());
+                return optionsHandler.handle(request);
             case "/method_options2":
                 IHandler optionsHandlerTwo =
                         new OptionsTwo();
-                return optionsHandlerTwo.handle(request.getRequestMethod());
+                return optionsHandlerTwo.handle(request);
             case "/head_request":
                 IHandler methodsNotAllowed = new NotAllowed();
-                return methodsNotAllowed.handle(request.getRequestMethod());
+                return methodsNotAllowed.handle(request);
             case "/echo_body":
-                IHandler echoHandler = new EchoHandler(
-                        request.getRequestBody());
-                return echoHandler.handle("POST");
+                IHandler echoHandler = new EchoHandler(request.body);
+                return echoHandler.handle(request);
             default:
                 NotFound notFound = new NotFound();
                 return notFound.handle();
@@ -60,14 +58,12 @@ public class RunnableServer implements Runnable {
     @Override
     public void run() {
         try {
-            HashMap<String, String> headers = new HashMap<>();
             String clientMessage = socketWrapper.receiveData();
             if (clientMessage != null) {
-                request = new Request(clientMessage);
-                System.out.println("Client Connected: \n" + clientMessage);
-                socketWrapper.sendData(
-                        handleResponse(request.getRequestPath(),
-                                request.getRequestMethod()));
+                System.out.println("Client Connected: " + clientMessage + "\n");
+                requestParser = new RequestParser(clientMessage);
+                Request request = requestParser.parse();
+                socketWrapper.sendData(handleResponse(request));
 
             }
 

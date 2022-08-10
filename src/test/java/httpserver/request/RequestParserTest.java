@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class RequestTest {
-    Request requestParser;
+class RequestParserTest {
+    RequestParser requestParser;
 
     private static String dummyRequestData() {
         return "POST /echo_body HTTP/1.1 \n"
@@ -19,7 +19,7 @@ class RequestTest {
     }
 
     public void initialize() {
-        requestParser = new Request(dummyRequestData());
+        requestParser = new RequestParser(dummyRequestData());
     }
 
     @Test

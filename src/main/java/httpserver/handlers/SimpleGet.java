@@ -1,6 +1,7 @@
 package httpserver.handlers;
 
 import httpserver.interfaces.IHandler;
+import httpserver.request.Request;
 
 import static httpserver.constants.HTTPLines.CRLF;
 
@@ -18,8 +19,8 @@ public class SimpleGet implements IHandler {
     }
 
     @Override
-    public String handle(String methodFromClient) {
-        if (isMethodAllowed(methodFromClient)) {
+    public String handle(Request request) {
+        if (isMethodAllowed(request.method)) {
             response.append("HTTP/1.1 200 OK" + CRLF);
         } else {
             response.append("HTTP/1.1 405 Method Not Allowed" + CRLF);

@@ -1,30 +1,21 @@
 package httpserver.request;
 
-import static httpserver.constants.HTTPLines.CRLF;
-import static httpserver.constants.HTTPLines.SP;
+import java.util.HashMap;
 
 public class Request {
+    public String method;
+    public String version;
+    public String path;
+    public String body;
+    public HashMap<String, String> headers;
 
-    String incomingRequest;
-    public Request(String incomingData) {
-        this.incomingRequest = incomingData;
+
+    public Request(String version, String method, String path,
+                   HashMap<String, String> headers, String body) {
+        this.method = method;
+        this.path = path;
+        this.version = version;
+        this.body = body;
+        this.headers = headers;
     }
-
-    public String getRequestMethod() {
-        return incomingRequest.split(SP)[0];
-    }
-
-    public String getRequestPath() {
-        return incomingRequest.split(SP)[1];
-    }
-
-    public String getRequestVersion() {
-        return incomingRequest.split(SP)[2];
-    }
-
-    public String getRequestBody() {
-        return incomingRequest.split(CRLF + CRLF, 2)[1];
-    }
-
-
 }
