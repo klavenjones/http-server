@@ -3,6 +3,7 @@ package httpserver.server;
 
 import httpserver.handlers.EchoHandler;
 import httpserver.handlers.NotAllowed;
+import httpserver.handlers.NotFound;
 import httpserver.handlers.Options;
 import httpserver.handlers.OptionsTwo;
 import httpserver.handlers.Redirect;
@@ -13,27 +14,14 @@ import httpserver.request.Request;
 
 import java.util.HashMap;
 
-import static httpserver.constants.HTTPLines.CRLF;
-
 
 public class RunnableServer implements Runnable {
     public ISocket socketWrapper;
     public Request request;
 
 
-    public String method;
-    public String path;
-    public String body;
-
     public RunnableServer(ISocket socket) {
         this.socketWrapper = socket;
-    }
-
-    public String dummyNotFoundResponse() {
-        StringBuilder response = new StringBuilder();
-        response.append("HTTP/1.1 404 Not Found" + CRLF);
-        response.append(CRLF);
-        return response.toString();
     }
 
 
@@ -63,7 +51,8 @@ public class RunnableServer implements Runnable {
                         request.getRequestBody());
                 return echoHandler.handle("POST");
             default:
-                return dummyNotFoundResponse();
+                NotFound notFound = new NotFound();
+                return notFound.handle();
         }
     }
 
