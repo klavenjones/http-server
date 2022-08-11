@@ -36,9 +36,6 @@ public class SocketWrapper implements ISocket {
 
     @Override
     public void sendData(String data) throws IOException {
-//        output.write("HTTP/1.1 200 OK\r\n".getBytes());
-//        output.write("\r\n".getBytes());
-//        output.write("Hello world".getBytes());
         output.write(data.getBytes());
         output.flush();
     }

@@ -3,7 +3,8 @@ package httpserver.handlers;
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
 
-import static httpserver.constants.HTTPLines.CRLF;
+import static httpserver.constants.HTTPLines.*;
+import static httpserver.constants.StatusCode.*;
 
 public class SimpleGet implements IHandler {
 
@@ -21,9 +22,9 @@ public class SimpleGet implements IHandler {
     @Override
     public String handle(Request request) {
         if (isMethodAllowed(request.method)) {
-            response.append("HTTP/1.1 200 OK" + CRLF);
+            response.append(DEFAULT_VERSION + SP + OK.code + CRLF);
         } else {
-            response.append("HTTP/1.1 405 Method Not Allowed" + CRLF);
+            response.append(DEFAULT_VERSION + SP + METHOD_NOT_ALLOWED.code + CRLF);
         }
         response.append(CRLF);
         response.append(body);

@@ -6,7 +6,9 @@ import httpserver.request.Request;
 import java.util.LinkedList;
 import java.util.List;
 
-import static httpserver.constants.HTTPLines.CRLF;
+import static httpserver.constants.HTTPLines.*;
+import static httpserver.constants.StatusCode.*;
+
 
 public class OptionsTwo implements IHandler {
 
@@ -25,9 +27,9 @@ public class OptionsTwo implements IHandler {
     @Override
     public String handle(Request request) {
         if (isMethodAllowed(request.method)) {
-            response.append("HTTP/1.1 200 OK" + CRLF);
+            response.append(DEFAULT_VERSION + SP + OK.code + CRLF);
         } else {
-            response.append("HTTP/1.1 405 Method Not Allowed" + CRLF);
+            response.append(DEFAULT_VERSION + SP + METHOD_NOT_ALLOWED.code + CRLF);
         }
         response.append("Allow: " + getMethods() + CRLF);
         response.append(CRLF);
