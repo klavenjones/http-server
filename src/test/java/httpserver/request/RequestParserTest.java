@@ -1,25 +1,19 @@
 package httpserver.request;
 
+
+import httpserver.TestUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RequestParserTest {
     RequestParser requestParser;
 
-    private static String dummyRequestData() {
-        return "POST /echo_body HTTP/1.1 \n"
-                + "Connection: close\n" +
-                "Host: 127.0.0.1:5000\n" +
-                "User-Agent: http.rb/4.3.0\n" +
-                "Content-Length: 9\r\n" +
-                "\r\n" +
-                "some body";
-    }
 
     public void initialize() {
-        requestParser = new RequestParser(dummyRequestData());
+        requestParser = new RequestParser(TestUtils.dummyRequestData());
     }
 
     @Test
