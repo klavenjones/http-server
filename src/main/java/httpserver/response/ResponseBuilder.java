@@ -3,7 +3,6 @@ package httpserver.response;
 public class ResponseBuilder {
     private String status = "200 OK";
     private String body = "";
-    private final int contentLength = 0;
     private String headers = "";
 
     public ResponseBuilder withStatus(String status) {
