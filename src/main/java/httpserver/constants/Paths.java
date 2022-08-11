@@ -9,7 +9,10 @@ public enum Paths {
     REDIRECT("/redirect"),
     ECHO_BODY("/echo_body"),
 
-    TEXT_RESPONSE("/text_response");
+    TEXT_RESPONSE("/text_response"),
+    JSON_RESPONSE("/json_response"),
+    HTML_RESPONSE("/html_response"),
+    XML_RESPONSE("/xml_response");
 
 
     public final String path;
