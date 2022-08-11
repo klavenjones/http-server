@@ -3,8 +3,11 @@ package httpserver.handlers;
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
 
-import static httpserver.constants.HTTPLines.*;
-import static httpserver.constants.StatusCode.*;
+import static httpserver.constants.HTTPLines.CRLF;
+import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
+import static httpserver.constants.HTTPLines.SP;
+import static httpserver.constants.StatusCode.METHOD_NOT_ALLOWED;
+import static httpserver.constants.StatusCode.OK;
 
 public class SimpleGet implements IHandler {
 
@@ -24,7 +27,8 @@ public class SimpleGet implements IHandler {
         if (isMethodAllowed(request.method)) {
             response.append(DEFAULT_VERSION + SP + OK.code + CRLF);
         } else {
-            response.append(DEFAULT_VERSION + SP + METHOD_NOT_ALLOWED.code + CRLF);
+            response.append(DEFAULT_VERSION + SP +
+                    METHOD_NOT_ALLOWED.code + CRLF);
         }
         response.append(CRLF);
         response.append(body);

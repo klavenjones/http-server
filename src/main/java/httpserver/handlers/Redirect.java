@@ -6,23 +6,24 @@ import httpserver.request.Request;
 import java.util.LinkedList;
 import java.util.List;
 
-import static httpserver.constants.HTTPLines.*;
-import static httpserver.constants.StatusCode.*;
+import static httpserver.constants.HTTPLines.CRLF;
+import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
+import static httpserver.constants.HTTPLines.SP;
+import static httpserver.constants.StatusCode.METHOD_NOT_ALLOWED;
+import static httpserver.constants.StatusCode.MOVED_PERMANENTLY;
 
 
 public class Redirect implements IHandler {
-
-    public enum AcceptedMethods {
-        GET, HEAD, OPTIONS, PUT, POST
-    }
 
     @Override
     public String handle(Request request) {
         StringBuilder response = new StringBuilder();
         if (isMethodAllowed(request.method)) {
-            response.append(DEFAULT_VERSION + SP + MOVED_PERMANENTLY.code + CRLF);
+            response.append(DEFAULT_VERSION + SP +
+                    MOVED_PERMANENTLY.code + CRLF);
         } else {
-            response.append(DEFAULT_VERSION + SP + METHOD_NOT_ALLOWED.code + CRLF);
+            response.append(DEFAULT_VERSION + SP +
+                    METHOD_NOT_ALLOWED.code + CRLF);
         }
         response.append("Allow: " + getMethods() + CRLF);
         response.append("Location: http://127.0.0.1:5000/simple_get" + CRLF);
@@ -49,8 +50,9 @@ public class Redirect implements IHandler {
         return String.join(", ", methods);
     }
 
-
-
+    public enum AcceptedMethods {
+        GET, HEAD, OPTIONS, PUT, POST
+    }
 
 
 }
