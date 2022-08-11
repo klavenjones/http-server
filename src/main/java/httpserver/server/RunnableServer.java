@@ -22,7 +22,6 @@ public class RunnableServer implements Runnable {
         try {
             String clientMessage = socketWrapper.receiveData();
             if (clientMessage != null) {
-                System.out.println("Client Connected: " + clientMessage + "\n");
                 requestParser = new RequestParser(clientMessage);
                 Request request = requestParser.parse();
                 Router router = new Router();
