@@ -1,6 +1,7 @@
 package httpserver.router;
 
 import httpserver.handlers.EchoHandler;
+import httpserver.handlers.HTMLResponse;
 import httpserver.handlers.JSONResponse;
 import httpserver.handlers.NotAllowed;
 import httpserver.handlers.NotFound;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 import static httpserver.constants.Paths.ECHO_BODY;
 import static httpserver.constants.Paths.HEAD_REQUEST;
+import static httpserver.constants.Paths.HTML_RESPONSE;
 import static httpserver.constants.Paths.JSON_RESPONSE;
 import static httpserver.constants.Paths.METHOD_OPTIONS;
 import static httpserver.constants.Paths.METHOD_OPTIONS2;
@@ -36,7 +38,9 @@ public class Router {
             entry(ECHO_BODY.path, new EchoHandler("some body")),
             entry(TEXT_RESPONSE.path, new TextResponse("text response")),
             entry(JSON_RESPONSE.path, new JSONResponse(
-                    "{\"key1\":\"value1\",\"key2\":\"value2\"}"))
+                    "{\"key1\":\"value1\",\"key2\":\"value2\"}")),
+            entry(HTML_RESPONSE.path, new HTMLResponse(
+                    "<html><body><p>HTML Response</p></body></html>"))
     );
 
 
