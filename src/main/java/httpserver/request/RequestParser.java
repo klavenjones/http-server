@@ -3,7 +3,6 @@ package httpserver.request;
 import java.util.HashMap;
 
 import static httpserver.constants.HTTPLines.CRLF;
-import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
 import static httpserver.constants.HTTPLines.SP;
 
 public class RequestParser {
@@ -35,17 +34,11 @@ public class RequestParser {
     }
 
     public String getRequestPath() {
-        if (incomingRequest.split(SP).length > 1) {
-            return incomingRequest.split(SP)[1];
-        }
-        return "";
+        return incomingRequest.split(SP, 0)[1];
     }
 
     public String getRequestVersion() {
-        if (incomingRequest.split(SP).length > 1) {
-            return incomingRequest.split(SP)[2];
-        }
-        return DEFAULT_VERSION;
+        return incomingRequest.split(SP)[2];
     }
 
     public HashMap<String, String> getRequestHeaders() {
@@ -67,10 +60,7 @@ public class RequestParser {
     }
 
     public String getRequestBody() {
-        if (incomingRequest.split(CRLF + CRLF, 2).length > 1) {
-            return incomingRequest.split(CRLF + CRLF, 2)[1];
-        }
-        return body;
+        return incomingRequest.split(CRLF + CRLF, 2)[1];
     }
 
 

@@ -10,6 +10,7 @@ import httpserver.handlers.OptionsTwo;
 import httpserver.handlers.Redirect;
 import httpserver.handlers.SimpleGet;
 import httpserver.handlers.TextResponse;
+import httpserver.handlers.XMLResponse;
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
 
@@ -25,6 +26,7 @@ import static httpserver.constants.Paths.REDIRECT;
 import static httpserver.constants.Paths.SIMPLE_GET;
 import static httpserver.constants.Paths.SIMPLE_GET_WITH_BODY;
 import static httpserver.constants.Paths.TEXT_RESPONSE;
+import static httpserver.constants.Paths.XML_RESPONSE;
 import static java.util.Map.entry;
 
 public class Router {
@@ -40,7 +42,9 @@ public class Router {
             entry(JSON_RESPONSE.path, new JSONResponse(
                     "{\"key1\":\"value1\",\"key2\":\"value2\"}")),
             entry(HTML_RESPONSE.path, new HTMLResponse(
-                    "<html><body><p>HTML Response</p></body></html>"))
+                    "<html><body><p>HTML Response</p></body></html>")),
+            entry(XML_RESPONSE.path,
+                    new XMLResponse("<note><body>XML Response</body></note>"))
     );
 
 

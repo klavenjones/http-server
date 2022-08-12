@@ -21,15 +21,14 @@ public class RunnableServer implements Runnable {
     public void run() {
         try {
             String clientMessage = socketWrapper.receiveData();
-            if (clientMessage != null) {
+            System.out.println("Client Connected: " + clientMessage);
+            if (clientMessage != null && clientMessage != "") {
                 requestParser = new RequestParser(clientMessage);
                 Request request = requestParser.parse();
                 Router router = new Router();
                 socketWrapper.sendData(router.handleRequest(request));
 
             }
-
-
             socketWrapper.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
