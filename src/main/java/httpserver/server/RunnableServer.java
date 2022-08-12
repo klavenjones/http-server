@@ -32,6 +32,7 @@ public class RunnableServer implements Runnable {
 
             socketWrapper.close();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
 
