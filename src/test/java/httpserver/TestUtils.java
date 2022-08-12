@@ -1,6 +1,7 @@
 package httpserver;
 
 import static httpserver.constants.HTTPLines.CRLF;
+import static httpserver.constants.HTTPLines.SP;
 
 public class TestUtils {
 
@@ -30,6 +31,14 @@ public class TestUtils {
                 "User-Agent: http.rb/4.3.0" + CRLF +
                 "Content-Length: 9" + CRLF + CRLF +
                 "some body";
+    }
+
+    public static String dummyGetData(String pathName) {
+        return  "GET" + SP + pathName + SP + "HTTP/1.1\n" +
+                "Connection: close\n" +
+                "Host: 127.0.0.1:5000\n" +
+                "User-Agent: http.rb/4.3.0\n" +
+                "Content-Length: 0" + CRLF + CRLF;
     }
 
 }

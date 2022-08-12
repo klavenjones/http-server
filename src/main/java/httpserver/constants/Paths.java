@@ -7,7 +7,9 @@ public enum Paths {
     METHOD_OPTIONS("/method_options"),
     METHOD_OPTIONS2("/method_options2"),
     REDIRECT("/redirect"),
-    ECHO_BODY("/echo_body");
+    ECHO_BODY("/echo_body"),
+
+    TEXT_RESPONSE("/text_response");
 
 
     public final String path;
