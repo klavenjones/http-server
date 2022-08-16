@@ -49,5 +49,20 @@ public class TestUtils {
                 + "some body";
     }
 
+    public static String dummyResponseWithContentLength(String length) {
+        return DEFAULT_VERSION + SP + OK.code + CRLF
+                + "Content-Length:" + SP + length + CRLF + CRLF
+                + "";
+    }
+
+    public static String dummyResponseWithMultipleHeaders(String length,
+                                                          String body) {
+        return DEFAULT_VERSION + SP + OK.code + CRLF
+                + "Content-Length:" + SP + length + CRLF
+                + "Allow:" + SP + "GET, HEAD, OPTIONS" + CRLF + CRLF
+                + body;
+    }
+
+
 }
 

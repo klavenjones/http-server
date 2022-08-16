@@ -1,7 +1,13 @@
 package httpserver.response;
 
+import static httpserver.constants.HTTPLines.CRLF;
+import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
+import static httpserver.constants.HTTPLines.SP;
+
+
 public class ResponseBuilder {
-    private String status = "200 OK";
+    public StringBuilder response = new StringBuilder();
+    private String status;
     private String body = "";
     private String headers = "";
 
@@ -11,7 +17,7 @@ public class ResponseBuilder {
     }
 
     public ResponseBuilder withHeader(String header) {
-        this.headers = header;
+        this.headers += header + CRLF;
         return this;
     }
 
@@ -20,7 +26,13 @@ public class ResponseBuilder {
         return this;
     }
 
-    public Response build() {
-        return new Response(this.status, this.headers, this.body);
+
+    public String build() {
+        this.response.append(DEFAULT_VERSION + SP + status + CRLF);
+        if (headers != "") {
+            this.response.append(headers + CRLF);
+        }
+        this.response.append(body);
+        return response.toString();
     }
 }
