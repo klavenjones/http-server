@@ -1,12 +1,12 @@
 package httpserver.handlers;
+import httpserver.response.ResponseBuilder;
+
 import static httpserver.constants.HTTPLines.*;
 import static httpserver.constants.StatusCode.NOT_FOUND;
 
 public class NotFound  {
+    ResponseBuilder responseBuilder = new ResponseBuilder();
     public String handle() {
-        StringBuilder response = new StringBuilder();
-        response.append(DEFAULT_VERSION + SP + NOT_FOUND.code + CRLF);
-        response.append(CRLF);
-        return response.toString();
+       return responseBuilder.withStatus(NOT_FOUND.code).build();
     }
 }

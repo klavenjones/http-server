@@ -2,34 +2,31 @@ package httpserver.handlers;
 
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
+import httpserver.response.ResponseBuilder;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static httpserver.constants.HTTPLines.CRLF;
-import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
-import static httpserver.constants.HTTPLines.SP;
 import static httpserver.constants.StatusCode.METHOD_NOT_ALLOWED;
 import static httpserver.constants.StatusCode.MOVED_PERMANENTLY;
 
 
 public class Redirect implements IHandler {
 
+    private final ResponseBuilder responseBuilder = new ResponseBuilder();
+
     @Override
     public String handle(Request request) {
-        StringBuilder response = new StringBuilder();
         if (isMethodAllowed(request.method)) {
-            response.append(DEFAULT_VERSION + SP +
-                    MOVED_PERMANENTLY.code + CRLF);
-        } else {
-            response.append(DEFAULT_VERSION + SP +
-                    METHOD_NOT_ALLOWED.code + CRLF);
-        }
-        response.append("Allow: " + getMethods() + CRLF);
-        response.append("Location: http://127.0.0.1:5000/simple_get" + CRLF);
-        response.append(CRLF);
+            return responseBuilder.withStatus(MOVED_PERMANENTLY.code)
+                    .withHeader("Allow: " + getMethods())
+                    .withHeader("Location: http://127.0.0.1:5000/simple_get")
+                    .build();
 
-        return response.toString();
+        } else {
+            return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
+                    .withHeader("Allow: " + getMethods()).build();
+        }
     }
 
     @Override

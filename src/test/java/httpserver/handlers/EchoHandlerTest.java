@@ -14,7 +14,7 @@ class EchoHandlerTest {
     @Test
     @DisplayName("Test is the response echos the body")
     public void testIfHandlerEchosBody() {
-        IHandler echoHandler = new EchoHandler("some body");
+        IHandler echoHandler = new EchoHandler();
         RequestParser requestParser =
                 new RequestParser(TestUtils.dummyEchoData());
         Request request = requestParser.parse();

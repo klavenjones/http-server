@@ -28,7 +28,7 @@ class RunnableServerTest {
 
     @Test
     @DisplayName("Test to if the server received the data")
-    public void testIfSocketSentData() throws IOException {
+    public void testIfSocketSentData() {
         SocketMock socket = buildMockSocket(TestUtils.dummyRequestData());
         assertEquals(socket.receiveData(), TestUtils.dummyRequestData());
     }

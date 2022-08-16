@@ -2,38 +2,37 @@ package httpserver.handlers;
 
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
+import httpserver.response.ResponseBuilder;
 
-import static httpserver.constants.HTTPLines.CRLF;
-import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
-import static httpserver.constants.HTTPLines.SP;
+import java.util.LinkedList;
+import java.util.List;
+
+import static httpserver.constants.Paths.SIMPLE_GET_WITH_BODY;
 import static httpserver.constants.StatusCode.METHOD_NOT_ALLOWED;
 import static httpserver.constants.StatusCode.OK;
 
 public class SimpleGet implements IHandler {
 
-    private final String body;
-    private final StringBuilder response = new StringBuilder();
-
-    public SimpleGet(String responseBody) {
-        this.body = responseBody;
-    }
-
-    public SimpleGet() {
-        this.body = "";
-    }
+    private final ResponseBuilder responseBuilder = new ResponseBuilder();
 
     @Override
     public String handle(Request request) {
         if (isMethodAllowed(request.method)) {
-            response.append(DEFAULT_VERSION + SP + OK.code + CRLF);
-        } else {
-            response.append(DEFAULT_VERSION + SP +
-                    METHOD_NOT_ALLOWED.code + CRLF);
-        }
-        response.append(CRLF);
-        response.append(body);
+            String body = "Hello world";
+            responseBuilder.withStatus(OK.code)
+                    .withHeader("Allow: " + getMethods());
 
-        return response.toString();
+            if (request.path.equals(SIMPLE_GET_WITH_BODY.path)) {
+                responseBuilder.withHeader("Content-Length: " + body.length())
+                        .withBody(body);
+            } else {
+                responseBuilder.withHeader("Content-Length: 0");
+            }
+            return responseBuilder.build();
+        } else {
+            return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
+                    .withHeader("Allow: " + getMethods()).build();
+        }
     }
 
     @Override
@@ -45,6 +44,15 @@ public class SimpleGet implements IHandler {
         }
         return false;
     }
+
+    private String getMethods() {
+        List<String> methods = new LinkedList<>();
+        for (AcceptedMethods acceptedMethod : AcceptedMethods.values()) {
+            methods.add(acceptedMethod.name());
+        }
+        return String.join(", ", methods);
+    }
+
 
     public enum AcceptedMethods {
         GET, HEAD, OPTIONS, POST

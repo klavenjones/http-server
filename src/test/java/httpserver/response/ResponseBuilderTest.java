@@ -9,8 +9,6 @@ import static httpserver.constants.StatusCode.OK;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ResponseBuilderTest {
-    private final ResponseBuilder responseBuilder = new ResponseBuilder();
-
     @Test
     @DisplayName("It should return a StartLine with a Status off 200")
     public void testIfBuilderReturnResponseWithOkStatus() {
