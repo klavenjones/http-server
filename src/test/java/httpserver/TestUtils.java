@@ -6,7 +6,7 @@ import static httpserver.constants.HTTPLines.SP;
 public class TestUtils {
 
     public static String dummyRequestData() {
-        return "POST /echo_body HTTP/1.1 \n" +
+        return  "POST /echo_body HTTP/1.1 \n" +
                 "Connection: close\n" +
                 "Host: 127.0.0.1:5000\n" +
                 "User-Agent: http.rb/4.3.0\n" +

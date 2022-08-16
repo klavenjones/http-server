@@ -31,11 +31,12 @@ public class NotAllowed implements IHandler {
         if (isMethodAllowed(request.method)) {
             response.append(DEFAULT_VERSION + SP + OK.code + CRLF);
         } else {
-            response.append(DEFAULT_VERSION + SP +
-                    METHOD_NOT_ALLOWED.code + CRLF);
+            response.append(
+                    DEFAULT_VERSION + SP + METHOD_NOT_ALLOWED.code + CRLF);
         }
         response.append("Allow: " + getMethods() + CRLF);
         response.append(CRLF);
+
         return response.toString();
     }
 
