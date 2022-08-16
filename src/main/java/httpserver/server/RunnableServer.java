@@ -8,12 +8,13 @@ import httpserver.router.Router;
 
 
 public class RunnableServer implements Runnable {
-    public ISocket socketWrapper;
-    public RequestParser requestParser;
-
+    private ISocket socketWrapper;
+    private RequestParser requestParser;
+    private Router router;
 
     public RunnableServer(ISocket socket) {
         this.socketWrapper = socket;
+        this.router = new Router();
     }
 
 
@@ -25,9 +26,7 @@ public class RunnableServer implements Runnable {
             if (clientMessage != null && clientMessage != "") {
                 requestParser = new RequestParser(clientMessage);
                 Request request = requestParser.parse();
-                Router router = new Router();
                 socketWrapper.sendData(router.handleRequest(request));
-
             }
             socketWrapper.close();
         } catch (Exception e) {

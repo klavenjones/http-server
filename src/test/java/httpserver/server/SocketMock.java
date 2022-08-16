@@ -21,6 +21,9 @@ public class SocketMock implements ISocket {
         this.writer = output;
     }
 
+    public SocketMock() {
+    }
+
     @Override
     public String receiveData() {
         try {
@@ -28,8 +31,8 @@ public class SocketMock implements ISocket {
             while (reader.available() > 0) {
                 clientData.append((char) reader.read());
             }
-            receivedData = clientData.toString();
-            dataSent = receivedData;
+            this.receivedData = clientData.toString();
+            this.dataSent = receivedData;
             return receivedData;
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,9 +41,8 @@ public class SocketMock implements ISocket {
     }
 
     @Override
-    public void sendData(String message) throws IOException {
-        dataSent = receivedData;
-        writer.write(Integer.parseInt(message));
+    public void sendData(String message) {
+        this.dataSent = message;
     }
 
     @Override

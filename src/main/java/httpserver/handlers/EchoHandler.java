@@ -31,7 +31,7 @@ public class EchoHandler implements IHandler {
         }
         response.append("Allow: " + getMethods() + CRLF);
         response.append(CRLF);
-        response.append(requestBody);
+        response.append(request.body);
 
         return response.toString();
     }

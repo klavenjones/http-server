@@ -8,7 +8,6 @@ public enum Paths {
     METHOD_OPTIONS2("/method_options2"),
     REDIRECT("/redirect"),
     ECHO_BODY("/echo_body"),
-
     TEXT_RESPONSE("/text_response"),
     JSON_RESPONSE("/json_response"),
     HTML_RESPONSE("/html_response"),

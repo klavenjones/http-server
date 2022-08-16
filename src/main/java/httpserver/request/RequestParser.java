@@ -14,18 +14,19 @@ public class RequestParser {
     private String version;
     private String body = "";
 
-    public RequestParser(String incomingData) {
+    public  RequestParser(String incomingData) {
         this.incomingRequest = incomingData;
     }
 
     public Request parse() {
+
         this.method = getRequestMethod();
         this.path = getRequestPath();
         this.version = getRequestVersion();
         this.headers = getRequestHeaders();
         this.body = getRequestBody();
-
         return new Request(version, method, path, headers, body);
+
     }
 
 
