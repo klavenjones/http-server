@@ -10,10 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static httpserver.constants.HTTPLines.CRLF;
-import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
-import static httpserver.constants.HTTPLines.SP;
-import static httpserver.constants.StatusCode.OK;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -21,11 +17,6 @@ import static org.mockito.Mockito.when;
 
 class RunnableServerTest {
 
-    private static String getDummyResponse() {
-        return DEFAULT_VERSION + SP + OK.code + CRLF
-                + "Allow: GET, HEAD, OPTIONS, PUT, POST" + CRLF + CRLF
-                + "some body";
-    }
 
     private static SocketMock buildMockSocket(String requestData) {
         SocketMock clientSocket = mock(SocketMock.class);
@@ -63,7 +54,7 @@ class RunnableServerTest {
         SocketMock socket = new SocketMock();
         socket.sendData(router.handleRequest(request));
 
-        assertEquals(socket.dataSent, getDummyResponse());
+        assertEquals(socket.dataSent, TestUtils.dummyResponse());
     }
 
 }

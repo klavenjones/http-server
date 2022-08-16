@@ -43,7 +43,6 @@ public class SocketMock implements ISocket {
     @Override
     public void sendData(String message) {
         this.dataSent = message;
-//        writer.write(Integer.parseInt(message));
     }
 
     @Override

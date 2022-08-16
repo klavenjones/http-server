@@ -1,12 +1,14 @@
 package httpserver;
 
 import static httpserver.constants.HTTPLines.CRLF;
+import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
 import static httpserver.constants.HTTPLines.SP;
+import static httpserver.constants.StatusCode.OK;
 
 public class TestUtils {
 
     public static String dummyRequestData() {
-        return  "POST /echo_body HTTP/1.1 \n" +
+        return "POST /echo_body HTTP/1.1 \n" +
                 "Connection: close\n" +
                 "Host: 127.0.0.1:5000\n" +
                 "User-Agent: http.rb/4.3.0\n" +
@@ -34,11 +36,17 @@ public class TestUtils {
     }
 
     public static String dummyGetData(String pathName) {
-        return  "GET" + SP + pathName + SP + "HTTP/1.1\n" +
+        return "GET" + SP + pathName + SP + "HTTP/1.1\n" +
                 "Connection: close\n" +
                 "Host: 127.0.0.1:5000\n" +
                 "User-Agent: http.rb/4.3.0\n" +
                 "Content-Length: 0" + CRLF + CRLF;
+    }
+
+    public static String dummyResponse() {
+        return DEFAULT_VERSION + SP + OK.code + CRLF
+                + "Allow: GET, HEAD, OPTIONS, PUT, POST" + CRLF + CRLF
+                + "some body";
     }
 
 }
