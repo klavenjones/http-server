@@ -10,20 +10,19 @@ import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JSONResponseTest {
-    String textResponse = "HTTP/1.1 200 OK" + CRLF
-            + "Content-Type: application/json;charset=utf-8" + CRLF
-            + "Content-Length: 33" + CRLF + CRLF +
-            "{\"key1\":\"value1\",\"key2\":\"value2\"}";
+    String textResponse =
+            "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS" + CRLF +
+                    "Content-Type: application/json;charset=utf-8" + CRLF +
+                    "Content-Length: 33" + CRLF + CRLF +
+                    "{\"key1\":\"value1\",\"key2\":\"value2\"}";
 
     @Test
     @DisplayName("Should return the correct response with body")
     public void testIfHandlerReturnsCorrectResponse() {
-        JSONResponse jsonResponseHandler =
-                new JSONResponse("{\"key1\":\"value1\",\"key2\":\"value2\"}");
+        JSONResponse jsonResponseHandler = new JSONResponse();
         RequestParser requestParser =
                 new RequestParser(TestUtils.dummyGetData("json_response"));
         Request request = requestParser.parse();
-        assertEquals(jsonResponseHandler.handle(request),
-                textResponse);
+        assertEquals(jsonResponseHandler.handle(request), textResponse);
     }
 }

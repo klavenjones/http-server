@@ -29,20 +29,16 @@ import static java.util.Map.entry;
 
 public class Routes {
 
-    public final Map<String, IHandler> routeMap = Map.ofEntries(
-            entry(SIMPLE_GET.path, new SimpleGet()),
-            entry(SIMPLE_GET_WITH_BODY.path, new SimpleGet()),
-            entry(HEAD_REQUEST.path, new NotAllowed()),
-            entry(METHOD_OPTIONS.path, new Options()),
-            entry(METHOD_OPTIONS2.path, new OptionsTwo()),
-            entry(REDIRECT.path, new Redirect()),
-            entry(ECHO_BODY.path, new EchoHandler()),
-            entry(TEXT_RESPONSE.path, new TextResponse("text response")),
-            entry(JSON_RESPONSE.path, new JSONResponse(
-                    "{\"key1\":\"value1\",\"key2\":\"value2\"}")),
-            entry(HTML_RESPONSE.path, new HTMLResponse(
-                    "<html><body><p>HTML Response</p></body></html>")),
-            entry(XML_RESPONSE.path,
-                    new XMLResponse("<note><body>XML Response</body></note>"))
-    );
+    public final Map<String, IHandler> routeMap =
+            Map.ofEntries(entry(SIMPLE_GET.path, new SimpleGet()),
+                    entry(SIMPLE_GET_WITH_BODY.path, new SimpleGet()),
+                    entry(HEAD_REQUEST.path, new NotAllowed()),
+                    entry(METHOD_OPTIONS.path, new Options()),
+                    entry(METHOD_OPTIONS2.path, new OptionsTwo()),
+                    entry(REDIRECT.path, new Redirect()),
+                    entry(ECHO_BODY.path, new EchoHandler()),
+                    entry(TEXT_RESPONSE.path, new TextResponse()),
+                    entry(JSON_RESPONSE.path, new JSONResponse()),
+                    entry(HTML_RESPONSE.path, new HTMLResponse()),
+                    entry(XML_RESPONSE.path, new XMLResponse()));
 }

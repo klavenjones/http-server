@@ -1,7 +1,6 @@
 package httpserver.handlers;
 import httpserver.response.ResponseBuilder;
 
-import static httpserver.constants.HTTPLines.*;
 import static httpserver.constants.StatusCode.NOT_FOUND;
 
 public class NotFound  {

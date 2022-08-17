@@ -12,13 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class TextResponseTest {
 
     String textResponse = "HTTP/1.1 200 OK" + CRLF
+            + "Allow: GET, HEAD, OPTIONS" + CRLF
             + "Content-Type: text/plain;charset=utf-8" + CRLF
-            +  "Content-Length: 9" + CRLF + CRLF + "Some Text";
+            +  "Content-Length: 13" + CRLF + CRLF + "text response";
 
     @Test
     @DisplayName("Should return the correct response with body")
     public void testIfHandlerReturnsCorrectResponse() {
-        TextResponse textResponseHandler = new TextResponse("Some Text");
+        TextResponse textResponseHandler = new TextResponse();
         RequestParser requestParser =
                 new RequestParser(TestUtils.dummyGetData("text_response"));
         Request request = requestParser.parse();
