@@ -2,7 +2,9 @@ package httpserver.handlers;
 
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
+import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
+import httpserver.response.ResponseFormatter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,11 +15,13 @@ import static httpserver.constants.StatusCode.OK;
 public class EchoHandler implements IHandler {
 
     ResponseBuilder responseBuilder = new ResponseBuilder();
+    Response response;
+    ResponseFormatter responseFormatter = new ResponseFormatter();
 
     @Override
-    public String handle(Request request) {
+    public Response handle(Request request) {
         if (isMethodAllowed(request.method)) {
-            return responseBuilder.withStatus(OK.code)
+           return responseBuilder.withStatus(OK.code)
                     .withHeader("Allow: " + getMethods())
                     .withHeader("Content-Length: " + request.body.length())
                     .withBody(request.body).build();

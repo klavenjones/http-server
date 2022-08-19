@@ -2,6 +2,7 @@ package httpserver.handlers;
 
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
+import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
 
 import java.util.LinkedList;
@@ -15,7 +16,7 @@ public class HTMLResponse implements IHandler {
 
 
     @Override
-    public String handle(Request request) {
+    public Response handle(Request request) {
 
         String body = "<html><body><p>HTML Response</p></body></html>";
 

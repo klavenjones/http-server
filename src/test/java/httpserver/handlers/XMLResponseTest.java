@@ -3,6 +3,8 @@ package httpserver.handlers;
 import httpserver.TestUtils;
 import httpserver.request.Request;
 import httpserver.request.RequestParser;
+import httpserver.response.Response;
+import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class XMLResponseTest {
 
-    String xmlResponse = "HTTP/1.1 200 OK" + CRLF
+    String xmlResponseText = "HTTP/1.1 200 OK" + CRLF
             + "Allow: GET, HEAD, OPTIONS" + CRLF
             + "Content-Type: application/xml;charset=utf-8" + CRLF
             + "Content-Length: 38" + CRLF + CRLF +
@@ -22,10 +24,15 @@ class XMLResponseTest {
     public void testIfHandlerReturnsCorrectResponse() {
         XMLResponse xmlHandler = new XMLResponse();
         RequestParser requestParser =
-                new RequestParser(TestUtils.dummyGetData("xml_response"));
+                new RequestParser(TestUtils.mockGetData("xml_response"));
         Request request = requestParser.parse();
-        assertEquals(xmlHandler.handle(request),
-                xmlResponse);
+        Response response = xmlHandler.handle(request);
+        ResponseFormatter responseFormatter = new ResponseFormatter();
+
+        String xmlResponse =
+                responseFormatter.formatResponse(response);
+
+        assertEquals(xmlResponse, xmlResponseText);
     }
 
 

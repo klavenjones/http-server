@@ -1,12 +1,9 @@
 package httpserver.response;
 
 import static httpserver.constants.HTTPLines.CRLF;
-import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
-import static httpserver.constants.HTTPLines.SP;
 
 
 public class ResponseBuilder {
-    public StringBuilder response = new StringBuilder();
     private String status;
     private String body = "";
     private String headers = "";
@@ -27,14 +24,16 @@ public class ResponseBuilder {
     }
 
 
-    public String build() {
-        this.response.append(DEFAULT_VERSION + SP + status + CRLF);
-        if (headers != "") {
-            this.response.append(headers + CRLF);
-        } else {
-            response.append(CRLF);
-        }
-        this.response.append(body);
-        return response.toString();
+    public Response build() {
+
+        return new Response(status, headers, body);
+//        this.response.append(DEFAULT_VERSION + SP + status + CRLF);
+//        if (headers != "") {
+//            this.response.append(headers + CRLF);
+//        } else {
+//            response.append(CRLF);
+//        }
+//        this.response.append(body);
+//        return response.toString();
     }
 }

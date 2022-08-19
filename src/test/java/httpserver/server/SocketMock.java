@@ -4,24 +4,20 @@ import httpserver.interfaces.ISocket;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.net.Socket;
 
 
 public class SocketMock implements ISocket {
 
     public boolean connectionClosed = false;
     public InputStream reader;
-    public OutputStream writer;
     public String dataSent;
     public String receivedData;
 
+    public Socket socket;
 
-    public SocketMock(InputStream input, OutputStream output) {
-        this.reader = input;
-        this.writer = output;
-    }
-
-    public SocketMock() {
+    public SocketMock(Socket clientSocket) {
+        this.socket = clientSocket;
     }
 
     @Override
@@ -32,7 +28,6 @@ public class SocketMock implements ISocket {
                 clientData.append((char) reader.read());
             }
             this.receivedData = clientData.toString();
-            this.dataSent = receivedData;
             return receivedData;
         } catch (IOException e) {
             e.printStackTrace();

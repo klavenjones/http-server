@@ -2,6 +2,7 @@ package httpserver.handlers;
 
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
+import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
 
 import java.util.LinkedList;
@@ -16,18 +17,16 @@ public class SimpleGet implements IHandler {
     private final ResponseBuilder responseBuilder = new ResponseBuilder();
 
     @Override
-    public String handle(Request request) {
+    public Response handle(Request request) {
         if (isMethodAllowed(request.method)) {
-            String body = "Hello world";
+            String body = "";
             responseBuilder.withStatus(OK.code)
                     .withHeader("Allow: " + getMethods());
-
             if (request.path.equals(SIMPLE_GET_WITH_BODY.path)) {
-                responseBuilder.withHeader("Content-Length: " + body.length())
-                        .withBody(body);
-            } else {
-                responseBuilder.withHeader("Content-Length: 0");
+                body = "Hello world";
+                responseBuilder.withBody(body);
             }
+            responseBuilder.withHeader("Content-Length: " + body.length());
             return responseBuilder.build();
         } else {
             return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)

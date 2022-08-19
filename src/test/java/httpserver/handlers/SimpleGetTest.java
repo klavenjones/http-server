@@ -3,6 +3,8 @@ package httpserver.handlers;
 import httpserver.TestUtils;
 import httpserver.request.Request;
 import httpserver.request.RequestParser;
+import httpserver.response.Response;
+import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +18,15 @@ class SimpleGetTest {
     public void testIfHandlerReturnsStatusLine() {
         SimpleGet simpleGetHandler = new SimpleGet();
         RequestParser requestParser =
-                new RequestParser(TestUtils.dummyGetData("/simple_get"));
+                new RequestParser(TestUtils.mockGetData("/simple_get"));
         Request request = requestParser.parse();
-        assertEquals(simpleGetHandler.handle(request),
+        Response response = simpleGetHandler.handle(request);
+        ResponseFormatter responseFormatter = new ResponseFormatter();
+
+        String simpleGetResponse = responseFormatter.formatResponse(response);
+
+
+        assertEquals(simpleGetResponse,
                 "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS, POST" +
                         CRLF + "Content-Length: 0" + CRLF + CRLF);
     }
@@ -28,9 +36,14 @@ class SimpleGetTest {
     public void testIfHandlerReturnsResponseWithBody() {
         SimpleGet simpleGetHandler = new SimpleGet();
         RequestParser requestParser = new RequestParser(
-                TestUtils.dummyGetData("/simple_get_with_body"));
+                TestUtils.mockGetData("/simple_get_with_body"));
         Request request = requestParser.parse();
-        assertEquals(simpleGetHandler.handle(request),
+        Response response = simpleGetHandler.handle(request);
+        ResponseFormatter responseFormatter = new ResponseFormatter();
+
+        String simpleGetResponse = responseFormatter.formatResponse(response);
+
+        assertEquals(simpleGetResponse,
                 "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS, POST" +
                         CRLF + "Content-Length: 11" + CRLF + CRLF +
                         "Hello world");

@@ -2,6 +2,7 @@ package httpserver.handlers;
 
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
+import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
 
 import java.util.LinkedList;
@@ -16,7 +17,7 @@ public class Redirect implements IHandler {
     private final ResponseBuilder responseBuilder = new ResponseBuilder();
 
     @Override
-    public String handle(Request request) {
+    public Response handle(Request request) {
         if (isMethodAllowed(request.method)) {
             return responseBuilder.withStatus(MOVED_PERMANENTLY.code)
                     .withHeader("Allow: " + getMethods())

@@ -4,6 +4,8 @@ import httpserver.TestUtils;
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
 import httpserver.request.RequestParser;
+import httpserver.response.Response;
+import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,10 +18,16 @@ class EchoHandlerTest {
     public void testIfHandlerEchosBody() {
         IHandler echoHandler = new EchoHandler();
         RequestParser requestParser =
-                new RequestParser(TestUtils.dummyEchoData());
+                new RequestParser(TestUtils.mockEchoData());
         Request request = requestParser.parse();
-        String response = echoHandler.handle(request).split(CRLF + CRLF, 2)[1];
-        assertEquals(response, "some body");
+        Response response = echoHandler.handle(request);
+        ResponseFormatter responseFormatter = new ResponseFormatter();
+
+        String responseBody = responseFormatter.formatResponse(response)
+                .split(CRLF + CRLF, 2)[1];
+
+
+        assertEquals(responseBody, "some body");
     }
 
 }

@@ -2,6 +2,7 @@ package httpserver.handlers;
 
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
+import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
 
 import java.util.LinkedList;
@@ -15,7 +16,7 @@ public class JSONResponse implements IHandler {
     private final ResponseBuilder responseBuilder = new ResponseBuilder();
 
     @Override
-    public String handle(Request request) {
+    public Response handle(Request request) {
         String body = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
 
         if (isMethodAllowed(request.method)) {
