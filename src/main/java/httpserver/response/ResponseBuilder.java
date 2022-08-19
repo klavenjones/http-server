@@ -23,17 +23,7 @@ public class ResponseBuilder {
         return this;
     }
 
-
     public Response build() {
-
         return new Response(status, headers, body);
-//        this.response.append(DEFAULT_VERSION + SP + status + CRLF);
-//        if (headers != "") {
-//            this.response.append(headers + CRLF);
-//        } else {
-//            response.append(CRLF);
-//        }
-//        this.response.append(body);
-//        return response.toString();
     }
 }
