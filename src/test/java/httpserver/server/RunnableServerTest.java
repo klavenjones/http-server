@@ -8,8 +8,6 @@ import httpserver.router.Router;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -28,14 +26,14 @@ class RunnableServerTest {
 
     @Test
     @DisplayName("Test to if the server received the data")
-    public void testIfSocketSentData() throws IOException {
+    public void testIfSocketSentData() {
         SocketMock socket = buildMockSocket(TestUtils.dummyRequestData());
         assertEquals(socket.receiveData(), TestUtils.dummyRequestData());
     }
 
     @Test
     @DisplayName("Test to if the server connection is closed")
-    public void testIfConnectionIsClosed() throws IOException {
+    public void testIfConnectionIsClosed() {
         SocketMock socket = buildMockSocket(TestUtils.dummyRequestData());
         RunnableServer runnableServer = new RunnableServer(socket);
         runnableServer.run();

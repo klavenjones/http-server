@@ -2,38 +2,29 @@ package httpserver.handlers;
 
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
+import httpserver.response.ResponseBuilder;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import static httpserver.constants.HTTPLines.CRLF;
-import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
-import static httpserver.constants.HTTPLines.SP;
 import static httpserver.constants.StatusCode.METHOD_NOT_ALLOWED;
 import static httpserver.constants.StatusCode.OK;
 
 public class EchoHandler implements IHandler {
 
-    String requestBody;
-
-    public EchoHandler(String body) {
-        this.requestBody = body;
-    }
+    ResponseBuilder responseBuilder = new ResponseBuilder();
 
     @Override
     public String handle(Request request) {
-        StringBuilder response = new StringBuilder();
         if (isMethodAllowed(request.method)) {
-            response.append(DEFAULT_VERSION + SP + OK.code + CRLF);
+            return responseBuilder.withStatus(OK.code)
+                    .withHeader("Allow: " + getMethods())
+                    .withHeader("Content-Length: " + request.body.length())
+                    .withBody(request.body).build();
         } else {
-            response.append(DEFAULT_VERSION + SP
-                    + METHOD_NOT_ALLOWED.code + CRLF);
+            return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
+                    .withHeader("Allow: " + getMethods()).build();
         }
-        response.append("Allow: " + getMethods() + CRLF);
-        response.append(CRLF);
-        response.append(request.body);
-
-        return response.toString();
     }
 
     @Override

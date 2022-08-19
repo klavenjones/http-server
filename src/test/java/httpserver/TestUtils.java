@@ -45,7 +45,8 @@ public class TestUtils {
 
     public static String dummyResponse() {
         return DEFAULT_VERSION + SP + OK.code + CRLF
-                + "Allow: GET, HEAD, OPTIONS, PUT, POST" + CRLF + CRLF
+                + "Allow: GET, HEAD, OPTIONS, PUT, POST" + CRLF
+                + "Content-Length: 9" + CRLF + CRLF
                 + "some body";
     }
 

@@ -16,22 +16,24 @@ class SimpleGetTest {
     public void testIfHandlerReturnsStatusLine() {
         SimpleGet simpleGetHandler = new SimpleGet();
         RequestParser requestParser =
-                new RequestParser(TestUtils.dummyGetData("simple_get"));
+                new RequestParser(TestUtils.dummyGetData("/simple_get"));
         Request request = requestParser.parse();
         assertEquals(simpleGetHandler.handle(request),
-                "HTTP/1.1 200 OK" + CRLF + CRLF);
+                "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS, POST" +
+                        CRLF + "Content-Length: 0" + CRLF + CRLF);
     }
 
     @Test
     @DisplayName("Should return the response with body")
     public void testIfHandlerReturnsResponseWithBody() {
-        SimpleGet simpleGetHandler = new SimpleGet("Hello world");
-        RequestParser requestParser =
-                new RequestParser(
-                        TestUtils.dummyGetData("simple_get_with_body"));
+        SimpleGet simpleGetHandler = new SimpleGet();
+        RequestParser requestParser = new RequestParser(
+                TestUtils.dummyGetData("/simple_get_with_body"));
         Request request = requestParser.parse();
         assertEquals(simpleGetHandler.handle(request),
-                "HTTP/1.1 200 OK" + CRLF + CRLF + "Hello world");
+                "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS, POST" +
+                        CRLF + "Content-Length: 11" + CRLF + CRLF +
+                        "Hello world");
     }
 
 
