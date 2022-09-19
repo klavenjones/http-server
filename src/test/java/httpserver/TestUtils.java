@@ -12,9 +12,9 @@ import static httpserver.constants.StatusCode.OK;
 public class TestUtils {
 
     public static String mockRequestData() {
-        return "POST /echo_body HTTP/1.1 \n" + "Connection: close\n" +
-                "Host: 127.0.0.1:5000\n" + "User-Agent: http.rb/4.3.0\n" +
-                "Content-Length: 9\r\n" + "\r\n" + "some body";
+        return "POST /echo_body HTTP/1.1 " + CRLF + "Connection: close" + CRLF +
+                "Host: 127.0.0.1:5000" + CRLF + "User-Agent: http.rb/4.3.0" +
+                CRLF + "Content-Length: 9" + CRLF + CRLF + "some body";
     }
 
     public static String mockEchoData() {
@@ -63,4 +63,5 @@ public class TestUtils {
     }
 
 }
+
 
