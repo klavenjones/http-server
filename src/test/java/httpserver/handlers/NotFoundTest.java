@@ -1,5 +1,7 @@
 package httpserver.handlers;
 
+import httpserver.response.Response;
+import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,12 @@ class NotFoundTest {
     @DisplayName("Test should return 404 Not Found")
     public void testIfHandlerReturnsNotFound() {
         NotFound notFound = new NotFound();
-        assertEquals(notFound.handle(), "HTTP/1.1 404 Not Found" + CRLF + CRLF);
+        Response response = notFound.handle();
+        ResponseFormatter responseFormatter = new ResponseFormatter();
+        String notFoundResponse =
+                responseFormatter.formatResponse(response);
+
+        assertEquals(notFoundResponse, "HTTP/1.1 404 Not Found" + CRLF + CRLF);
 
     }
 }

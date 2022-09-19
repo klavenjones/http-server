@@ -13,7 +13,7 @@ class RequestParserTest {
 
 
     public void initialize() {
-        requestParser = new RequestParser(TestUtils.dummyRequestData());
+        requestParser = new RequestParser(TestUtils.mockRequestData());
     }
 
     @Test

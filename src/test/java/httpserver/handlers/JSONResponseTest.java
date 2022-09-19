@@ -3,6 +3,8 @@ package httpserver.handlers;
 import httpserver.TestUtils;
 import httpserver.request.Request;
 import httpserver.request.RequestParser;
+import httpserver.response.Response;
+import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +23,15 @@ class JSONResponseTest {
     public void testIfHandlerReturnsCorrectResponse() {
         JSONResponse jsonResponseHandler = new JSONResponse();
         RequestParser requestParser =
-                new RequestParser(TestUtils.dummyGetData("json_response"));
+                new RequestParser(TestUtils.mockGetData("json_response"));
         Request request = requestParser.parse();
-        assertEquals(jsonResponseHandler.handle(request), textResponse);
+
+        Response response = jsonResponseHandler.handle(request);
+        ResponseFormatter responseFormatter = new ResponseFormatter();
+
+        String jsonResponse =
+                responseFormatter.formatResponse(response);
+
+        assertEquals(jsonResponse, textResponse);
     }
 }

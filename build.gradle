@@ -51,7 +51,7 @@ task(HelloWorld, type: JavaExec){
 task(runServer, type: JavaExec){
     mainClass = 'httpserver.server.HttpServer'
     classpath = sourceSets.main.runtimeClasspath
-    args  '8080'
+    args  '5000'
 }
 
 //
