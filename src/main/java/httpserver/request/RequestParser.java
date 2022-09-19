@@ -14,7 +14,7 @@ public class RequestParser {
     private String version;
     private String body = "";
 
-    public  RequestParser(String incomingData) {
+    public RequestParser(String incomingData) {
         this.incomingRequest = incomingData;
     }
 
@@ -39,25 +39,14 @@ public class RequestParser {
     }
 
     public String getRequestVersion() {
-        return incomingRequest.split(SP)[2];
+        return incomingRequest.split(SP, 0)[2];
     }
 
     public HashMap<String, String> getRequestHeaders() {
-        String[] headerArray = incomingRequest.split(CRLF);
-        for (int i = 1; i < headerArray.length; i++) {
-            String[] headerPair = headerArray[i].split(": ");
-            if (headerPair.length == 2) {
-                String key = headerPair[0];
-                String value;
-                if (i == headerArray.length - 1) {
-                    value = headerPair[1].split(CRLF + CRLF, 2)[0];
-                } else {
-                    value = headerPair[1];
-                }
-                this.headers.put(key, value);
-            }
-        }
-        return headers;
+        //This will create a string array seperated by CRLF
+        // where each element is one line of the request
+        String[] requestString = incomingRequest.split(CRLF);
+        return parseKeyValuePairs(requestString, headers);
     }
 
     public String getRequestBody() {
@@ -65,4 +54,25 @@ public class RequestParser {
     }
 
 
+    public HashMap<String, String> parseKeyValuePairs(
+            String[] requestString, HashMap<String, String> headers) {
+        //Iterate through the string array starting
+        // from the second line of the string
+        for (int i = 1; i < requestString.length; i++) {
+            String[] headerPair = requestString[i].split(": ");
+            if (headerPair.length == 2) {
+                String key = headerPair[0];
+                String value;
+                if (i == requestString.length - 1) {
+                    value = headerPair[1].split(CRLF + CRLF, 2)[0];
+                } else {
+                    value = headerPair[1];
+                }
+                headers.put(key, value);
+            }
+        }
+        return headers;
+    }
+
 }
+
