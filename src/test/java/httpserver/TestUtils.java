@@ -1,5 +1,9 @@
 package httpserver;
 
+import httpserver.request.Request;
+
+import java.util.HashMap;
+
 import static httpserver.constants.HTTPLines.CRLF;
 import static httpserver.constants.HTTPLines.DEFAULT_VERSION;
 import static httpserver.constants.HTTPLines.SP;
@@ -64,6 +68,10 @@ public class TestUtils {
                 + body;
     }
 
+
+    public static Request buildRequest(String version, String method, String path, String body, HashMap<String, String> headers){
+        return new Request(version, method, path, headers, body);
+    }
 
 }
 
