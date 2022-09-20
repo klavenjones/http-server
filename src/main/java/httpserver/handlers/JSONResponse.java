@@ -18,7 +18,7 @@ public class JSONResponse implements IHandler {
     @Override
     public Response handle(Request request) {
         String body = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
-
+        //Possible Abstraction and Extraction
         if (isMethodAllowed(request.method)) {
             return responseBuilder.withStatus(OK.code)
                     .withHeader("Allow: " + getMethods())
@@ -31,6 +31,7 @@ public class JSONResponse implements IHandler {
         }
     }
 
+    //Utility methods
     @Override
     public boolean isMethodAllowed(String method) {
         for (AcceptedMethods acceptedMethods : AcceptedMethods.values()) {
@@ -41,7 +42,8 @@ public class JSONResponse implements IHandler {
         return false;
     }
 
-    private String getMethods() {
+    //Utility methods
+    public String getMethods() {
         List<String> methods = new LinkedList<>();
         for (AcceptedMethods acceptedMethod : AcceptedMethods.values()) {
             methods.add(acceptedMethod.name());
