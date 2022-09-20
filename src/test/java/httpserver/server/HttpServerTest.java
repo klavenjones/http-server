@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -24,7 +25,8 @@ class HttpServerTest {
     public void testIfErrorIsThrown() {
         HttpServer httpServer = new HttpServer();
         ServerSocket serverSocket = mock(ServerSocket.class);
-        assertThrows(IOException.class, () -> httpServer.runServerThread(serverSocket));
+        assertThrows(IOException.class,
+                () -> HttpServer.runServerThread(serverSocket));
     }
 
 
