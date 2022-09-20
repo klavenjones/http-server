@@ -26,7 +26,7 @@ class HttpServerTest {
         HttpServer httpServer = new HttpServer();
         ServerSocket serverSocket = mock(ServerSocket.class);
         assertThrows(IOException.class,
-                () -> HttpServer.runServerThread(serverSocket));
+                () -> httpServer.startServerThread(serverSocket));
     }
 
 

@@ -9,5 +9,5 @@ public interface IHandler {
 
     boolean isMethodAllowed(String method);
 
-    String getMethods();
+    String getAcceptedMethods();
 }

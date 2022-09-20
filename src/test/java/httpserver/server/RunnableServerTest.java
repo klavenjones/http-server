@@ -80,7 +80,8 @@ class RunnableServerTest {
         doNothing().when(socketMock).sendData(TestUtils.mockResponse());
 
         RunnableServer runnableServer = new RunnableServer(socketMock);
-        runnableServer.parseMessage(TestUtils.mockRequestData(), socketMock);
+        runnableServer.parseClientMessage(TestUtils.mockRequestData(),
+                socketMock);
     }
 
 }

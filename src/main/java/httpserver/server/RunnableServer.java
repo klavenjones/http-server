@@ -21,7 +21,7 @@ public class RunnableServer implements Runnable {
         this.router = new Router();
     }
 
-    public void parseMessage(String clientMessage, ISocket socketWrapper)
+    public void parseClientMessage(String clientMessage, ISocket socketWrapper)
             throws IOException {
         if (clientMessage != null && clientMessage != "") {
             requestParser = new RequestParser(clientMessage);
@@ -37,7 +37,7 @@ public class RunnableServer implements Runnable {
         try {
             String clientMessage = socketWrapper.receiveData();
             System.out.println("Client Connected: " + clientMessage);
-            parseMessage(clientMessage, socketWrapper);
+            parseClientMessage(clientMessage, socketWrapper);
             socketWrapper.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
