@@ -42,7 +42,6 @@ public class JSONResponse implements IHandler {
         return false;
     }
 
-    //Utility methods
     public String getAcceptedMethods() {
         List<String> methods = new LinkedList<>();
         for (AcceptedMethods acceptedMethod : AcceptedMethods.values()) {
