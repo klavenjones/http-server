@@ -40,7 +40,7 @@ public class Redirect implements IHandler {
         return false;
     }
 
-    private String getMethods() {
+    public String getMethods() {
         List<String> methods = new LinkedList<>();
         for (AcceptedMethods acceptedMethod : AcceptedMethods.values()) {
             methods.add(acceptedMethod.name());

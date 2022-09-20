@@ -16,6 +16,8 @@ public class NotAllowed implements IHandler {
 
     private final ResponseBuilder responseBuilder = new ResponseBuilder();
 
+
+    //Util method?
     @Override
     public boolean isMethodAllowed(String method) {
         for (AcceptedMethods acceptedMethods : AcceptedMethods.values()) {
@@ -37,7 +39,7 @@ public class NotAllowed implements IHandler {
         }
     }
 
-    private String getMethods() {
+    public String getMethods() {
         List<String> methods = new LinkedList<>();
         for (AcceptedMethods acceptedMethod : AcceptedMethods.values()) {
             methods.add(acceptedMethod.name());
