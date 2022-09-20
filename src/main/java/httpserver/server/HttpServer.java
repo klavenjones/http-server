@@ -40,9 +40,7 @@ public class HttpServer {
             System.err.println("Usage: java EchoServer <port number>");
             System.exit(1);
         }
-
         int portNumber = Integer.parseInt(args[0]);
-
         runServerThread(buildServerSocket(portNumber));
     }
 }
