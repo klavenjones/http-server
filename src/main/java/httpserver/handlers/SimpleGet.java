@@ -21,7 +21,7 @@ public class SimpleGet implements IHandler {
         if (isMethodAllowed(request.method)) {
             String body = "";
             responseBuilder.withStatus(OK.code)
-                    .withHeader("Allow: " + getMethods());
+                    .withHeader("Allow: " + getAcceptedMethods());
             if (request.path.equals(SIMPLE_GET_WITH_BODY.path)) {
                 body = "Hello world";
                 responseBuilder.withBody(body);
@@ -30,7 +30,7 @@ public class SimpleGet implements IHandler {
             return responseBuilder.build();
         } else {
             return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
-                    .withHeader("Allow: " + getMethods()).build();
+                    .withHeader("Allow: " + getAcceptedMethods()).build();
         }
     }
 
@@ -44,7 +44,7 @@ public class SimpleGet implements IHandler {
         return false;
     }
 
-    public String getMethods() {
+    public String getAcceptedMethods() {
         List<String> methods = new LinkedList<>();
         for (AcceptedMethods acceptedMethod : AcceptedMethods.values()) {
             methods.add(acceptedMethod.name());

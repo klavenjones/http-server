@@ -20,13 +20,13 @@ public class Redirect implements IHandler {
     public Response handle(Request request) {
         if (isMethodAllowed(request.method)) {
             return responseBuilder.withStatus(MOVED_PERMANENTLY.code)
-                    .withHeader("Allow: " + getMethods())
+                    .withHeader("Allow: " + getAcceptedMethods())
                     .withHeader("Location: http://127.0.0.1:5000/simple_get")
                     .build();
 
         } else {
             return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
-                    .withHeader("Allow: " + getMethods()).build();
+                    .withHeader("Allow: " + getAcceptedMethods()).build();
         }
     }
 
@@ -40,7 +40,7 @@ public class Redirect implements IHandler {
         return false;
     }
 
-    public String getMethods() {
+    public String getAcceptedMethods() {
         List<String> methods = new LinkedList<>();
         for (AcceptedMethods acceptedMethod : AcceptedMethods.values()) {
             methods.add(acceptedMethod.name());

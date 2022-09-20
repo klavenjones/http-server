@@ -18,7 +18,7 @@ public class HttpServer {
         return serverSocketWrapper.createServerSocket(portNumber);
     }
 
-    public static void runServerThread(ServerSocket serverSocket)
+    public static void startServerThread(ServerSocket serverSocket)
             throws IOException {
         try {
             while (true) {
@@ -41,6 +41,6 @@ public class HttpServer {
             System.exit(1);
         }
         int portNumber = Integer.parseInt(args[0]);
-        runServerThread(buildServerSocket(portNumber));
+        startServerThread(buildServerSocket(portNumber));
     }
 }

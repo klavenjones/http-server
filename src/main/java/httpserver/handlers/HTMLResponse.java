@@ -22,13 +22,13 @@ public class HTMLResponse implements IHandler {
 
         if (isMethodAllowed(request.method)) {
             return responseBuilder.withStatus(OK.code)
-                    .withHeader("Allow: " + getMethods())
+                    .withHeader("Allow: " + getAcceptedMethods())
                     .withHeader("Content-Type: text/html;charset=utf-8")
                     .withHeader("Content-Length: " + body.length())
                     .withBody(body).build();
         } else {
             return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
-                    .withHeader("Allow: " + getMethods()).build();
+                    .withHeader("Allow: " + getAcceptedMethods()).build();
         }
 
     }
@@ -43,7 +43,7 @@ public class HTMLResponse implements IHandler {
         return false;
     }
 
-    public String getMethods() {
+    public String getAcceptedMethods() {
         List<String> methods = new LinkedList<>();
         for (AcceptedMethods acceptedMethod : AcceptedMethods.values()) {
             methods.add(acceptedMethod.name());

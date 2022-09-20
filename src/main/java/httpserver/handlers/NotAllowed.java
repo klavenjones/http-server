@@ -32,14 +32,14 @@ public class NotAllowed implements IHandler {
     public Response handle(Request request) {
         if (isMethodAllowed(request.method)) {
             return responseBuilder.withStatus(OK.code)
-                    .withHeader("Allow: " + getMethods()).build();
+                    .withHeader("Allow: " + getAcceptedMethods()).build();
         } else {
             return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
-                    .withHeader("Allow: " + getMethods()).build();
+                    .withHeader("Allow: " + getAcceptedMethods()).build();
         }
     }
 
-    public String getMethods() {
+    public String getAcceptedMethods() {
         List<String> methods = new LinkedList<>();
         for (AcceptedMethods acceptedMethod : AcceptedMethods.values()) {
             methods.add(acceptedMethod.name());
