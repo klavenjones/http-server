@@ -23,7 +23,7 @@ public class TextResponse implements IHandler {
                     .withHeader("Allow: " + getAcceptedMethods())
                     .withHeader("Content-Type: text/plain;charset=utf-8")
                     .withHeader("Content-Length: " + body.length())
-                    .withBody(body).build();
+                    .withBody(body.getBytes()).build();
         } else {
             return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
                     .withHeader("Allow: " + getAcceptedMethods()).build();

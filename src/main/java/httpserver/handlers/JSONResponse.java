@@ -24,7 +24,7 @@ public class JSONResponse implements IHandler {
                     .withHeader("Allow: " + getAcceptedMethods())
                     .withHeader("Content-Type: application/json;charset=utf-8")
                     .withHeader("Content-Length: " + body.length())
-                    .withBody(body).build();
+                    .withBody(body.getBytes()).build();
         } else {
             return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
                     .withHeader("Allow: " + getAcceptedMethods()).build();

@@ -5,7 +5,7 @@ import static httpserver.constants.HTTPLines.CRLF;
 
 public class ResponseBuilder {
     private String status;
-    private String body = "";
+    private byte[] body;
     private String headers = "";
 
     public ResponseBuilder withStatus(String status) {
@@ -18,7 +18,7 @@ public class ResponseBuilder {
         return this;
     }
 
-    public ResponseBuilder withBody(String body) {
+    public ResponseBuilder withBody(byte[] body) {
         this.body = body;
         return this;
     }

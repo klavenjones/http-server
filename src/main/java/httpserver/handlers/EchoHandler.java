@@ -21,7 +21,7 @@ public class EchoHandler implements IHandler {
             return responseBuilder.withStatus(OK.code)
                     .withHeader("Allow: " + getAcceptedMethods())
                     .withHeader("Content-Length: " + request.body.length())
-                    .withBody(request.body).build();
+                    .withBody(request.body.getBytes()).build();
         } else {
             return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
                     .withHeader("Allow: " + getAcceptedMethods()).build();

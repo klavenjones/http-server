@@ -35,8 +35,8 @@ public class SocketWrapper implements ISocket {
     }
 
     @Override
-    public void sendData(String data) throws IOException {
-        output.write(data.getBytes());
+    public void sendData(byte[] data) throws IOException {
+        output.write(data);
         output.flush();
     }
 
