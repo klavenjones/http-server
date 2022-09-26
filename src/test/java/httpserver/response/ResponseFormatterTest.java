@@ -16,7 +16,7 @@ class ResponseFormatterTest {
     public void testIfResponseFormattedCorrectStartLine() {
         String body = "";
         String headers = "";
-        Response response = new Response(OK.code, headers, body);
+        Response response = new StringResponse(OK.code, headers, body);
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
         String expectedResponse = DEFAULT_VERSION + SP + OK.code + CRLF + CRLF;

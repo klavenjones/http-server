@@ -9,29 +9,31 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static httpserver.constants.HTTPLines.CRLF;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-class JSONResponseTest {
-    String textResponse =
-            "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS" + CRLF +
-                    "Content-Type: application/json;charset=utf-8" + CRLF +
-                    "Content-Length: 33" + CRLF + CRLF +
-                    "{\"key1\":\"value1\",\"key2\":\"value2\"}";
+class TextHandlerTest {
+
+    String textResponseToClient = "HTTP/1.1 200 OK" + CRLF
+            + "Allow: GET, HEAD, OPTIONS" + CRLF
+            + "Content-Type: text/plain;charset=utf-8" + CRLF
+            +  "Content-Length: 13" + CRLF + CRLF + "text response";
 
     @Test
     @DisplayName("Should return the correct response with body")
     public void testIfHandlerReturnsCorrectResponse() {
-        JSONResponse jsonResponseHandler = new JSONResponse();
+        TextHandler textResponseHandler = new TextHandler();
         RequestParser requestParser =
-                new RequestParser(TestUtils.mockGetData("json_response"));
+                new RequestParser(TestUtils.mockGetData("text_response"));
         Request request = requestParser.parse();
-
-        Response response = jsonResponseHandler.handle(request);
+        Response response = textResponseHandler.handle(request);
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
-        String jsonResponse =
+        String textResponse =
                 responseFormatter.formatResponse(response);
 
-        assertEquals(jsonResponse, textResponse);
+        assertEquals(textResponse, textResponseToClient);
     }
+
+
 }
+

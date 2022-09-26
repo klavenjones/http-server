@@ -12,7 +12,7 @@ class ResponseTest {
     @Test
     @DisplayName("Test if the status is 200 OK")
     public void testIfStatusOK() {
-        Response response = new Response(OK.code, "", "");
+        Response response = new StringResponse(OK.code, "", "");
         assertEquals(response.status, "200 OK");
     }
 
@@ -20,7 +20,7 @@ class ResponseTest {
     @DisplayName("Test if it returns the correct body")
     public void testIfBodyIsCorrect() {
         String body = "Some Body";
-        Response response = new Response(OK.code, "", body);
+        Response response = new StringResponse(OK.code, "", body);
         assertEquals(response.body, "Some Body");
     }
 
@@ -30,7 +30,7 @@ class ResponseTest {
         String body = "Some Body";
         String headers =
                 "Content-Type: 9" + CRLF + "Allow: GET, OPTIONS, HEAD" + CRLF;
-        Response response = new Response(OK.code, headers, body);
+        Response response = new StringResponse(OK.code, headers, body);
         assertEquals(response.headers, headers);
     }
 }

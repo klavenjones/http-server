@@ -11,18 +11,17 @@ import java.util.List;
 import static httpserver.constants.StatusCode.METHOD_NOT_ALLOWED;
 import static httpserver.constants.StatusCode.OK;
 
-public class JSONResponse implements IHandler {
-
+public class TextHandler implements IHandler {
     private final ResponseBuilder responseBuilder = new ResponseBuilder();
 
     @Override
     public Response handle(Request request) {
-        String body = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
-        //Possible Abstraction and Extraction
+        String body = "text response";
+
         if (isMethodAllowed(request.method)) {
             return responseBuilder.withStatus(OK.code)
                     .withHeader("Allow: " + getAcceptedMethods())
-                    .withHeader("Content-Type: application/json;charset=utf-8")
+                    .withHeader("Content-Type: text/plain;charset=utf-8")
                     .withHeader("Content-Length: " + body.length())
                     .withBody(body).build();
         } else {
@@ -31,7 +30,6 @@ public class JSONResponse implements IHandler {
         }
     }
 
-    //Utility methods
     @Override
     public boolean isMethodAllowed(String method) {
         for (AcceptedMethods acceptedMethods : AcceptedMethods.values()) {
@@ -49,6 +47,7 @@ public class JSONResponse implements IHandler {
         }
         return String.join(", ", methods);
     }
+
 
     public enum AcceptedMethods {
         GET, HEAD, OPTIONS

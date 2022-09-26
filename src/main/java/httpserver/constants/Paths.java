@@ -11,7 +11,8 @@ public enum Paths {
     TEXT_RESPONSE("/text_response"),
     JSON_RESPONSE("/json_response"),
     HTML_RESPONSE("/html_response"),
-    XML_RESPONSE("/xml_response");
+    XML_RESPONSE("/xml_response"),
+    PNG_RESPONSE("/doggo.png");
 
 
     public final String path;

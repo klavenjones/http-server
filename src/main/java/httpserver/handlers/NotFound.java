@@ -1,5 +1,6 @@
 package httpserver.handlers;
 import httpserver.response.Response;
+import httpserver.response.StringResponse;
 import httpserver.response.ResponseBuilder;
 
 import static httpserver.constants.StatusCode.NOT_FOUND;

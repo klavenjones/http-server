@@ -9,13 +9,15 @@ import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EchoHandlerTest {
     @Test
     @DisplayName("Test is the response echos the body")
-    public void testIfHandlerEchosBody() {
+    public void testIfHandlerEchosBody() throws IOException {
         IHandler echoHandler = new EchoHandler();
         RequestParser requestParser =
                 new RequestParser(TestUtils.mockEchoData());

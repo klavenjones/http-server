@@ -11,27 +11,27 @@ import org.junit.jupiter.api.Test;
 import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class HTMLResponseTest {
+class JSONHandlerTest {
     String textResponse =
             "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS" + CRLF +
-                    "Content-Type: text/html;charset=utf-8" + CRLF +
-                    "Content-Length: 46" + CRLF + CRLF +
-                    "<html><body><p>HTML Response</p></body></html>";
+                    "Content-Type: application/json;charset=utf-8" + CRLF +
+                    "Content-Length: 33" + CRLF + CRLF +
+                    "{\"key1\":\"value1\",\"key2\":\"value2\"}";
 
     @Test
     @DisplayName("Should return the correct response with body")
     public void testIfHandlerReturnsCorrectResponse() {
-        HTMLResponse htmlResponseHandler = new HTMLResponse();
+        JSONHandler jsonResponseHandler = new JSONHandler();
         RequestParser requestParser =
-                new RequestParser(TestUtils.mockGetData("html_response"));
+                new RequestParser(TestUtils.mockGetData("json_response"));
         Request request = requestParser.parse();
-        Response response = htmlResponseHandler.handle(request);
+
+        Response response = jsonResponseHandler.handle(request);
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
-        String htmlResponse =
+        String jsonResponse =
                 responseFormatter.formatResponse(response);
 
-
-        assertEquals(htmlResponse, textResponse);
+        assertEquals(jsonResponse, textResponse);
     }
 }

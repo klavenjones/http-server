@@ -14,7 +14,8 @@ public class ResponseFormatter {
         } else {
             responseString.append(CRLF);
         }
-        responseString.append(response.body);
+
+        responseString.append(response);
         return responseString.toString();
     }
 }
