@@ -9,13 +9,16 @@ import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EchoHandlerTest {
     @Test
     @DisplayName("Test is the response echos the body")
-    public void testIfHandlerEchosBody() {
+    public void testIfHandlerEchosBody() throws IOException {
         IHandler echoHandler = new EchoHandler();
         RequestParser requestParser =
                 new RequestParser(TestUtils.mockEchoData());
@@ -23,11 +26,13 @@ class EchoHandlerTest {
         Response response = echoHandler.handle(request);
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
-        String responseBody = responseFormatter.formatResponse(response)
-                .split(CRLF + CRLF, 2)[1];
+        String responseBody =
+                new String(responseFormatter.formatResponse(response),
+                        StandardCharsets.UTF_8).split(CRLF + CRLF, 2)[1];
 
 
         assertEquals(responseBody, "some body");
     }
 
 }
+

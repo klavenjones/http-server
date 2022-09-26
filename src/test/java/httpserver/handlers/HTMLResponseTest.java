@@ -8,6 +8,9 @@ import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,7 +23,7 @@ class HTMLResponseTest {
 
     @Test
     @DisplayName("Should return the correct response with body")
-    public void testIfHandlerReturnsCorrectResponse() {
+    public void testIfHandlerReturnsCorrectResponse() throws IOException {
         HTMLResponse htmlResponseHandler = new HTMLResponse();
         RequestParser requestParser =
                 new RequestParser(TestUtils.mockGetData("html_response"));
@@ -29,9 +32,11 @@ class HTMLResponseTest {
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
         String htmlResponse =
-                responseFormatter.formatResponse(response);
+                new String(responseFormatter.formatResponse(response),
+                        StandardCharsets.UTF_8);
 
 
         assertEquals(htmlResponse, textResponse);
     }
 }
+

@@ -8,13 +8,16 @@ import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class NotAllowedTest {
     @Test
     @DisplayName("Should return 405 Method Not Allowed")
-    public void testIfHandlerSends405StatusLine() {
+    public void testIfHandlerSends405StatusLine() throws IOException {
         IHandler optionsHandler = new NotAllowed();
         RequestParser requestParser = new RequestParser(dummyData());
         Request request = requestParser.parse();
@@ -22,7 +25,8 @@ class NotAllowedTest {
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
         String statusLine =
-                responseFormatter.formatResponse(response).split(CRLF)[0];
+                new String(responseFormatter.formatResponse(response),
+                        StandardCharsets.UTF_8).split(CRLF)[0];
 
         assertEquals(statusLine, "HTTP/1.1 405 Method Not Allowed");
     }
