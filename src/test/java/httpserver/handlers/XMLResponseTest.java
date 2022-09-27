@@ -8,20 +8,23 @@ import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class XMLResponseTest {
 
-    String xmlResponseText = "HTTP/1.1 200 OK" + CRLF
-            + "Allow: GET, HEAD, OPTIONS" + CRLF
-            + "Content-Type: application/xml;charset=utf-8" + CRLF
-            + "Content-Length: 38" + CRLF + CRLF +
-            "<note><body>XML Response</body></note>";
+    String xmlResponseText =
+            "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS" + CRLF +
+                    "Content-Type: application/xml;charset=utf-8" + CRLF +
+                    "Content-Length: 38" + CRLF + CRLF +
+                    "<note><body>XML Response</body></note>";
 
     @Test
     @DisplayName("Should return the correct response with body")
-    public void testIfHandlerReturnsCorrectResponse() {
+    public void testIfHandlerReturnsCorrectResponse() throws IOException {
         XMLResponse xmlHandler = new XMLResponse();
         RequestParser requestParser =
                 new RequestParser(TestUtils.mockGetData("xml_response"));
@@ -30,10 +33,12 @@ class XMLResponseTest {
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
         String xmlResponse =
-                responseFormatter.formatResponse(response);
+                new String(responseFormatter.formatResponse(response),
+                        StandardCharsets.UTF_8);
 
         assertEquals(xmlResponse, xmlResponseText);
     }
 
 
 }
+

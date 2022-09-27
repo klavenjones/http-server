@@ -6,7 +6,7 @@ import java.io.IOException;
 public interface ISocket {
     String receiveData();
 
-    void sendData(String data) throws IOException;
+    void sendData(byte[] data) throws IOException;
 
     void close();
 }

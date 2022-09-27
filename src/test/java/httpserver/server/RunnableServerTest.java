@@ -77,7 +77,8 @@ class RunnableServerTest {
     @DisplayName("Test if send data was called when parseMessage is called")
     public void testIfSendDataWasCalled() throws IOException {
         SocketMock socketMock = mock(SocketMock.class);
-        doNothing().when(socketMock).sendData(TestUtils.mockResponse());
+        doNothing().when(socketMock)
+                .sendData(TestUtils.mockResponse().getBytes());
 
         RunnableServer runnableServer = new RunnableServer(socketMock);
         runnableServer.parseClientMessage(TestUtils.mockRequestData(),

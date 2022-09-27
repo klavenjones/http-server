@@ -8,13 +8,16 @@ import httpserver.response.ResponseFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OptionsTest {
     @Test
     @DisplayName("Should test for proper Status line")
-    public void testIfHandlerReturnsCorrectStatusLine() {
+    public void testIfHandlerReturnsCorrectStatusLine() throws IOException {
         IHandler optionsHandler = new Options();
         RequestParser requestParser = new RequestParser(dummyData());
         Request request = requestParser.parse();
@@ -23,13 +26,14 @@ class OptionsTest {
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
         String statusLine =
-                responseFormatter.formatResponse(response).split(CRLF)[0];
+                new String(responseFormatter.formatResponse(response),
+                        StandardCharsets.UTF_8).split(CRLF)[0];
         assertEquals(statusLine, "HTTP/1.1 200 OK");
     }
 
     @Test
     @DisplayName("Should test for proper Allow Header")
-    public void testIfHandlerReturnsCorrectAllowHeader() {
+    public void testIfHandlerReturnsCorrectAllowHeader() throws IOException {
         IHandler optionsHandler = new Options();
         RequestParser requestParser = new RequestParser(dummyData());
         Request request = requestParser.parse();
@@ -37,13 +41,15 @@ class OptionsTest {
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
         String allowHeader =
-                responseFormatter.formatResponse(response).split(CRLF)[1];
+                new String(responseFormatter.formatResponse(response),
+                        StandardCharsets.UTF_8).split(CRLF)[1];
         assertEquals(allowHeader, "Allow: GET, HEAD, OPTIONS");
     }
 
     @Test
     @DisplayName("Should test for proper Allow Header given Five Headers")
-    public void testIfHandlerReturnsAllowHeaderGivenFiveMethods() {
+    public void testIfHandlerReturnsAllowHeaderGivenFiveMethods()
+            throws IOException {
         IHandler optionsHandler = new OptionsTwo();
         RequestParser requestParser = new RequestParser(dummyData());
         Request request = requestParser.parse();
@@ -51,7 +57,8 @@ class OptionsTest {
         Response response = optionsHandler.handle(request);
         ResponseFormatter responseFormatter = new ResponseFormatter();
         String allowHeader =
-                responseFormatter.formatResponse(response).split(CRLF)[1];
+                new String(responseFormatter.formatResponse(response),
+                        StandardCharsets.UTF_8).split(CRLF)[1];
 
         assertEquals(allowHeader, "Allow: GET, HEAD, OPTIONS, PUT, POST");
     }

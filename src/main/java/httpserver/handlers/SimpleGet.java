@@ -24,7 +24,7 @@ public class SimpleGet implements IHandler {
                     .withHeader("Allow: " + getAcceptedMethods());
             if (request.path.equals(SIMPLE_GET_WITH_BODY.path)) {
                 body = "Hello world";
-                responseBuilder.withBody(body);
+                responseBuilder.withBody(body.getBytes());
             }
             responseBuilder.withHeader("Content-Length: " + body.length());
             return responseBuilder.build();

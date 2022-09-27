@@ -11,7 +11,7 @@ public class SocketMock implements ISocket {
 
     public boolean connectionClosed = false;
     public InputStream reader;
-    public String dataSent;
+    public byte[] dataSent;
     public String receivedData;
 
     public Socket socket;
@@ -36,7 +36,7 @@ public class SocketMock implements ISocket {
     }
 
     @Override
-    public void sendData(String message) {
+    public void sendData(byte[] message) {
         this.dataSent = message;
     }
 
