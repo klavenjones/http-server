@@ -19,12 +19,12 @@ class DoggoPNGHandlerTest {
 
     @Test
     @DisplayName("Test if handler Returns the correct response")
-    void testIfReturnCorrectResponse() throws IOException {
+    void testIfReturnCorrectResponse(){
         DoggoPNGHandler doggoPNGHandler = new DoggoPNGHandler();
         RequestParser requestParser =
                 new RequestParser(TestUtils.mockGetData("doggo.png"));
-        Request request = requestParser.parse();
 
+        Request request = requestParser.parse();
         Response response = doggoPNGHandler.handle(request);
 
         assertEquals(response.status, "200 OK");

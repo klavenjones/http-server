@@ -18,7 +18,7 @@ import static httpserver.constants.StatusCode.OK;
 public class DoggoPNGHandler implements IHandler {
 
     private final ResponseBuilder responseBuilder = new ResponseBuilder();
-    private String absolutePath = "web/doggo.png";
+    private final String absolutePath = "web/doggo.png";
 
     @Override
     public Response handle(Request request) {
