@@ -24,7 +24,7 @@ public class KittenJPGHandler implements IHandler {
                 byte[] body = fileViewer.getFileData("web/kitteh.jpg");
                 return responseBuilder.withStatus(OK.code)
                         .withHeader("Allow: " + getAcceptedMethods())
-                        .withHeader("Content-Type: image/jpg")
+                        .withHeader("Content-Type: image/jpeg")
                         .withHeader("Content-Length: " + body.length)
                         .withBody(body).build();
             } else {
