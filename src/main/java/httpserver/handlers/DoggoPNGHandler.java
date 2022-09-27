@@ -1,14 +1,12 @@
 package httpserver.handlers;
 
+import httpserver.FileViewer;
 import httpserver.interfaces.IHandler;
 import httpserver.request.Request;
 import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,13 +16,13 @@ import static httpserver.constants.StatusCode.OK;
 public class DoggoPNGHandler implements IHandler {
 
     private final ResponseBuilder responseBuilder = new ResponseBuilder();
-    private final String absolutePath = "web/doggo.png";
+    private final FileViewer fileViewer = new FileViewer();
 
     @Override
     public Response handle(Request request) {
         try {
             if (isMethodAllowed(request.method)) {
-                byte[] body = readFileData();
+                byte[] body = fileViewer.getFileData("web/doggo.png");
                 return responseBuilder.withStatus(OK.code)
                         .withHeader("Allow: " + getAcceptedMethods())
                         .withHeader("Content-Type: image/png")
@@ -56,12 +54,6 @@ public class DoggoPNGHandler implements IHandler {
             methods.add(acceptedMethod.name());
         }
         return String.join(", ", methods);
-    }
-
-    private byte[] readFileData() throws IOException {
-        File file = new File(absolutePath);
-        Path path = file.toPath();
-        return Files.readAllBytes(path);
     }
 
     public enum AcceptedMethods {
