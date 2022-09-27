@@ -14,6 +14,7 @@ public enum Paths {
     XML_RESPONSE("/xml_response"),
     DOGGO_PNG("/doggo.png"),
     KISSES_GIF("/kisses.gif"),
+    HEALTH_CHECK_HTML("/health-check.html"),
     KITTEN_JPG("/kitteh.jpg");
 
 
