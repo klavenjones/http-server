@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class KittenJPGHandlerTest {
     String kittenResponseHeaders =
-            "Allow: GET" + CRLF + "Content-Type: image/jpg" + CRLF +
+            "Allow: GET" + CRLF + "Content-Type: image/jpeg" + CRLF +
                     "Content-Length: 207922" + CRLF;
 
     @Test
