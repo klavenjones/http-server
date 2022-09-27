@@ -40,3 +40,6 @@ bin/
 
 ## Build ##
 build
+
+##Scripts##
+style_script.sh

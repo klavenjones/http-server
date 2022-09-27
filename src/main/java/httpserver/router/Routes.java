@@ -4,6 +4,7 @@ import httpserver.handlers.DoggoPNGHandler;
 import httpserver.handlers.EchoHandler;
 import httpserver.handlers.HTMLResponseHandler;
 import httpserver.handlers.JSONResponseHandler;
+import httpserver.handlers.KittenJPGHandler;
 import httpserver.handlers.NotAllowed;
 import httpserver.handlers.Options;
 import httpserver.handlers.OptionsTwo;
@@ -20,6 +21,7 @@ import static httpserver.constants.Paths.ECHO_BODY;
 import static httpserver.constants.Paths.HEAD_REQUEST;
 import static httpserver.constants.Paths.HTML_RESPONSE;
 import static httpserver.constants.Paths.JSON_RESPONSE;
+import static httpserver.constants.Paths.KITTEN_JPG;
 import static httpserver.constants.Paths.METHOD_OPTIONS;
 import static httpserver.constants.Paths.METHOD_OPTIONS2;
 import static httpserver.constants.Paths.REDIRECT;
@@ -43,5 +45,6 @@ public class Routes {
                     entry(JSON_RESPONSE.path, new JSONResponseHandler()),
                     entry(HTML_RESPONSE.path, new HTMLResponseHandler()),
                     entry(XML_RESPONSE.path, new XMLResponseHandler()),
-                    entry(DOGGO_PNG.path, new DoggoPNGHandler()));
+                    entry(DOGGO_PNG.path, new DoggoPNGHandler()),
+                    entry(KITTEN_JPG.path, new KittenJPGHandler()));
 }
