@@ -11,7 +11,7 @@ import java.util.List;
 import static httpserver.constants.StatusCode.METHOD_NOT_ALLOWED;
 import static httpserver.constants.StatusCode.OK;
 
-public class TextResponse implements IHandler {
+public class TextResponseHandler implements IHandler {
     private final ResponseBuilder responseBuilder = new ResponseBuilder();
 
     @Override

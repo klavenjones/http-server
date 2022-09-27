@@ -14,31 +14,29 @@ import java.nio.charset.StandardCharsets;
 import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class XMLResponseTest {
-
-    String xmlResponseText =
+class HTMLResponseHandlerTest {
+    String textResponse =
             "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS" + CRLF +
-                    "Content-Type: application/xml;charset=utf-8" + CRLF +
-                    "Content-Length: 38" + CRLF + CRLF +
-                    "<note><body>XML Response</body></note>";
+                    "Content-Type: text/html;charset=utf-8" + CRLF +
+                    "Content-Length: 46" + CRLF + CRLF +
+                    "<html><body><p>HTML Response</p></body></html>";
 
     @Test
     @DisplayName("Should return the correct response with body")
     public void testIfHandlerReturnsCorrectResponse() throws IOException {
-        XMLResponse xmlHandler = new XMLResponse();
+        HTMLResponseHandler htmlResponseHandler = new HTMLResponseHandler();
         RequestParser requestParser =
-                new RequestParser(TestUtils.mockGetData("xml_response"));
+                new RequestParser(TestUtils.mockGetData("html_response"));
         Request request = requestParser.parse();
-        Response response = xmlHandler.handle(request);
+        Response response = htmlResponseHandler.handle(request);
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
-        String xmlResponse =
+        String htmlResponse =
                 new String(responseFormatter.formatResponse(response),
                         StandardCharsets.UTF_8);
 
-        assertEquals(xmlResponse, xmlResponseText);
+
+        assertEquals(htmlResponse, textResponse);
     }
-
-
 }
 

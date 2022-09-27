@@ -14,29 +14,30 @@ import java.nio.charset.StandardCharsets;
 import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class HTMLResponseTest {
-    String textResponse =
-            "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS" + CRLF +
-                    "Content-Type: text/html;charset=utf-8" + CRLF +
-                    "Content-Length: 46" + CRLF + CRLF +
-                    "<html><body><p>HTML Response</p></body></html>";
+class TextResponseHandlerTest {
+
+    String textResponseToClient = "HTTP/1.1 200 OK" + CRLF
+            + "Allow: GET, HEAD, OPTIONS" + CRLF
+            + "Content-Type: text/plain;charset=utf-8" + CRLF
+            + "Content-Length: 13" + CRLF + CRLF + "text response";
 
     @Test
     @DisplayName("Should return the correct response with body")
     public void testIfHandlerReturnsCorrectResponse() throws IOException {
-        HTMLResponse htmlResponseHandler = new HTMLResponse();
+        TextResponseHandler textResponseHandler = new TextResponseHandler();
         RequestParser requestParser =
-                new RequestParser(TestUtils.mockGetData("html_response"));
+                new RequestParser(TestUtils.mockGetData("text_response"));
         Request request = requestParser.parse();
-        Response response = htmlResponseHandler.handle(request);
+        Response response = textResponseHandler.handle(request);
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
-        String htmlResponse =
+        String textResponse =
                 new String(responseFormatter.formatResponse(response),
                         StandardCharsets.UTF_8);
 
-
-        assertEquals(htmlResponse, textResponse);
+        assertEquals(textResponse, textResponseToClient);
     }
+
+
 }
 
