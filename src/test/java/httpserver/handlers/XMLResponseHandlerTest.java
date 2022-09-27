@@ -14,29 +14,31 @@ import java.nio.charset.StandardCharsets;
 import static httpserver.constants.HTTPLines.CRLF;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class JSONResponseTest {
-    String textResponse =
+class XMLResponseHandlerTest {
+
+    String xmlResponseText =
             "HTTP/1.1 200 OK" + CRLF + "Allow: GET, HEAD, OPTIONS" + CRLF +
-                    "Content-Type: application/json;charset=utf-8" + CRLF +
-                    "Content-Length: 33" + CRLF + CRLF +
-                    "{\"key1\":\"value1\",\"key2\":\"value2\"}";
+                    "Content-Type: application/xml;charset=utf-8" + CRLF +
+                    "Content-Length: 38" + CRLF + CRLF +
+                    "<note><body>XML Response</body></note>";
 
     @Test
     @DisplayName("Should return the correct response with body")
     public void testIfHandlerReturnsCorrectResponse() throws IOException {
-        JSONResponse jsonResponseHandler = new JSONResponse();
+        XMLResponseHandler xmlHandler = new XMLResponseHandler();
         RequestParser requestParser =
-                new RequestParser(TestUtils.mockGetData("json_response"));
+                new RequestParser(TestUtils.mockGetData("xml_response"));
         Request request = requestParser.parse();
-
-        Response response = jsonResponseHandler.handle(request);
+        Response response = xmlHandler.handle(request);
         ResponseFormatter responseFormatter = new ResponseFormatter();
 
-        String jsonResponse =
+        String xmlResponse =
                 new String(responseFormatter.formatResponse(response),
                         StandardCharsets.UTF_8);
 
-        assertEquals(jsonResponse, textResponse);
+        assertEquals(xmlResponse, xmlResponseText);
     }
+
+
 }
 

@@ -5,33 +5,40 @@ import httpserver.request.Request;
 import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 
 import static httpserver.constants.StatusCode.METHOD_NOT_ALLOWED;
 import static httpserver.constants.StatusCode.OK;
 
-public class JSONResponse implements IHandler {
+public class DoggoPNGHandler implements IHandler {
 
     private final ResponseBuilder responseBuilder = new ResponseBuilder();
+    private String absolutePath = "web/doggo.png";
 
     @Override
     public Response handle(Request request) {
-        String body = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
-        //Possible Abstraction and Extraction
-        if (isMethodAllowed(request.method)) {
-            return responseBuilder.withStatus(OK.code)
-                    .withHeader("Allow: " + getAcceptedMethods())
-                    .withHeader("Content-Type: application/json;charset=utf-8")
-                    .withHeader("Content-Length: " + body.length())
-                    .withBody(body.getBytes()).build();
-        } else {
-            return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
-                    .withHeader("Allow: " + getAcceptedMethods()).build();
+        try {
+            if (isMethodAllowed(request.method)) {
+                byte[] body = readFileData();
+                return responseBuilder.withStatus(OK.code)
+                        .withHeader("Allow: " + getAcceptedMethods())
+                        .withHeader("Content-Type: image/png")
+                        .withHeader("Content-Length: " + body.length)
+                        .withBody(body).build();
+            } else {
+                return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
+                        .withHeader("Allow: " + getAcceptedMethods()).build();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    //Utility methods
     @Override
     public boolean isMethodAllowed(String method) {
         for (AcceptedMethods acceptedMethods : AcceptedMethods.values()) {
@@ -42,6 +49,7 @@ public class JSONResponse implements IHandler {
         return false;
     }
 
+    @Override
     public String getAcceptedMethods() {
         List<String> methods = new LinkedList<>();
         for (AcceptedMethods acceptedMethod : AcceptedMethods.values()) {
@@ -50,7 +58,13 @@ public class JSONResponse implements IHandler {
         return String.join(", ", methods);
     }
 
+    private byte[] readFileData() throws IOException {
+        File file = new File(absolutePath);
+        Path path = file.toPath();
+        return Files.readAllBytes(path);
+    }
+
     public enum AcceptedMethods {
-        GET, HEAD, OPTIONS
+        GET
     }
 }

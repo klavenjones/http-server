@@ -11,24 +11,26 @@ import java.util.List;
 import static httpserver.constants.StatusCode.METHOD_NOT_ALLOWED;
 import static httpserver.constants.StatusCode.OK;
 
-public class XMLResponse implements IHandler {
+public class HTMLResponseHandler implements IHandler {
     private final ResponseBuilder responseBuilder = new ResponseBuilder();
 
 
     @Override
     public Response handle(Request request) {
-        String body = "<note><body>XML Response</body></note>";
+
+        String body = "<html><body><p>HTML Response</p></body></html>";
 
         if (isMethodAllowed(request.method)) {
             return responseBuilder.withStatus(OK.code)
                     .withHeader("Allow: " + getAcceptedMethods())
-                    .withHeader("Content-Type: application/xml;charset=utf-8")
+                    .withHeader("Content-Type: text/html;charset=utf-8")
                     .withHeader("Content-Length: " + body.length())
                     .withBody(body.getBytes()).build();
         } else {
             return responseBuilder.withStatus(METHOD_NOT_ALLOWED.code)
                     .withHeader("Allow: " + getAcceptedMethods()).build();
         }
+
     }
 
     @Override
@@ -48,7 +50,6 @@ public class XMLResponse implements IHandler {
         }
         return String.join(", ", methods);
     }
-
 
     public enum AcceptedMethods {
         GET, HEAD, OPTIONS
