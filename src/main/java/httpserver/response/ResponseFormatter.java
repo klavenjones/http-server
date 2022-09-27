@@ -16,7 +16,8 @@ public class ResponseFormatter {
         //Build Status Line
         responseString.append(DEFAULT_VERSION + SP + response.status + CRLF);
 
-        //If there are any headers, then add it to the response string. If not add a line break to the response string
+        //If there are any headers, then add it to the response string.
+        // If not add a line break to the response string
         if (response.headers != "") {
             responseString.append(response.headers + CRLF);
         } else {
@@ -26,12 +27,15 @@ public class ResponseFormatter {
         //Convert the response string to bytes
         formattedResponse = responseString.toString().getBytes();
 
-        //If there is no body to add in the response, return the formatted response.
+        //If there is no body to add in the response,
+        // return the formatted response.
         if (response.body == null) {
             return formattedResponse;
         }
 
-        //If there is a body, build a byte array and add the formattedResonse and body to the byte array and return it.
+        //If there is a body, build a byte array
+        // and add the formattedResonse and
+        // body to the byte array and return it.
         ByteArrayOutputStream responseWithBody = new ByteArrayOutputStream();
         responseWithBody.write(formattedResponse);
         responseWithBody.write(response.body);
