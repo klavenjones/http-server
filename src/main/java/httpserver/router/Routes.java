@@ -3,6 +3,7 @@ package httpserver.router;
 import httpserver.handlers.DoggoPNGHandler;
 import httpserver.handlers.EchoHandler;
 import httpserver.handlers.HTMLResponseHandler;
+import httpserver.handlers.HealthCheckHandler;
 import httpserver.handlers.JSONResponseHandler;
 import httpserver.handlers.KissesGIFHandler;
 import httpserver.handlers.KittenJPGHandler;
@@ -20,6 +21,7 @@ import java.util.Map;
 import static httpserver.constants.Paths.DOGGO_PNG;
 import static httpserver.constants.Paths.ECHO_BODY;
 import static httpserver.constants.Paths.HEAD_REQUEST;
+import static httpserver.constants.Paths.HEALTH_CHECK_HTML;
 import static httpserver.constants.Paths.HTML_RESPONSE;
 import static httpserver.constants.Paths.JSON_RESPONSE;
 import static httpserver.constants.Paths.KISSES_GIF;
@@ -49,5 +51,6 @@ public class Routes {
                     entry(XML_RESPONSE.path, new XMLResponseHandler()),
                     entry(DOGGO_PNG.path, new DoggoPNGHandler()),
                     entry(KISSES_GIF.path, new KissesGIFHandler()),
+                    entry(HEALTH_CHECK_HTML.path, new HealthCheckHandler()),
                     entry(KITTEN_JPG.path, new KittenJPGHandler()));
 }
