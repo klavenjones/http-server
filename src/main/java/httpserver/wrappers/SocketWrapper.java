@@ -24,9 +24,9 @@ public class SocketWrapper implements ISocket {
     public String receiveData() {
         try {
             StringBuilder clientData = new StringBuilder();
-            while (input.available() > 0) {
+            do {
                 clientData.append((char) input.read());
-            }
+            } while (input.available() > 0);
             return clientData.toString();
         } catch (IOException e) {
             e.printStackTrace();

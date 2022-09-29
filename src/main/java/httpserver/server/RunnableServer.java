@@ -23,7 +23,8 @@ public class RunnableServer implements Runnable {
 
     public void parseClientMessage(String clientMessage, ISocket socketWrapper)
             throws IOException {
-        if (clientMessage != null && clientMessage != "") {
+
+        if (clientMessage != null && !clientMessage.isEmpty()) {
             requestParser = new RequestParser(clientMessage);
             Request request = requestParser.parse();
             Response response = router.handleRequest(request);

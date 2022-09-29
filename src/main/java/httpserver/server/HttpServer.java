@@ -8,19 +8,14 @@ import httpserver.wrappers.SocketWrapper;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class HttpServer {
 
     private static IServerSocket serverSocketWrapper;
-    private static ExecutorService pool;
+
 
     public static ServerSocket buildServerSocket(int portNumber) {
         serverSocketWrapper = new ServerSocketWrapper();
-        int processingCoresAvailable = Runtime.getRuntime()
-                .availableProcessors();
-        pool = Executors.newFixedThreadPool(processingCoresAvailable);
         return serverSocketWrapper.createServerSocket(portNumber);
     }
 
@@ -32,13 +27,11 @@ public class HttpServer {
                 SocketWrapper socketWrapper = new SocketWrapper(clientSocket);
                 RunnableServer runnableServer =
                         new RunnableServer(socketWrapper);
-                Thread thread = new Thread(runnableServer);
-                pool.execute(thread);
+                new Thread(runnableServer).start();
             }
         } catch (RuntimeException e) {
             throw new IOException(e);
         } finally {
-            System.out.println("Socket Closed");
             serverSocket.close();
         }
     }
