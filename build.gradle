@@ -19,8 +19,9 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'httpserver.HttpServer'
+        attributes('Main-Class': 'httpserver.server.HttpServer')
     }
+    baseName "http-server"
 }
 
 
