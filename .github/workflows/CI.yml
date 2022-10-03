@@ -29,14 +29,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Run linting on test suite
-        run: ./gradlew checkStyleTest
+      - name: Run Acceptance Test
+        run: bash acceptance_test.sh
 
-      - name: Run linting on main
-        run: ./gradlew checkStyleMain
-
-      - name: Run test suite
-        run: ./gradlew test
-
-      - name: Build with Gradle wrapper
-        run: ./gradlew build
+#      - name: Run linting on main
+#        run: ./gradlew checkStyleMain
+#
+#      - name: Run test suite
+#        run: ./gradlew test
+#
+#      - name: Build with Gradle wrapper
+#        run: ./gradlew build
