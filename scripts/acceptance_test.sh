@@ -29,7 +29,7 @@ java -jar $HTTP_SERVER_LIB_PATH 5000 &
 sleep 2
 
 echo "Running Acceptance Tests....."
-cd http_server_spec
+cd http-server-spec
 bundle install
 rake test:implemented
 
