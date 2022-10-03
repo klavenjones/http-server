@@ -58,7 +58,6 @@ Before running the script add environment variables
   export HTTP_SERVER_LIB_PATH=<full path to build package (build/libs/http-server.jar)>
   export WEB_ASSET_PATH=<full path to web assets (web folder with images)>
   export RUN_SERVER_SCRIPT_PATH=<full path to server script that runs the server remotely>
-  export RUN_SERVER_SCRIPT_PATH=<full path to server script that runs the server remotely>
   export USER=<ssh user name>
   export HOSTNAME=<ssh hostname>
 ```
