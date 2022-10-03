@@ -4,7 +4,6 @@ A HTTP Server built with Java.
 
 ---
 
-
 ## Instructions
 
 ---
@@ -50,6 +49,35 @@ Run the linter for the test suite
 ```
 ./gradlew test
 ```
+
+### Deployment
+
+Before running the script add environment variables
+
+```
+  export HTTP_SERVER_LIB_PATH=<full path to build package (build/libs/http-server.jar)>
+  export WEB_ASSET_PATH=<full path to web assets (web folder with images)>
+  export RUN_SERVER_SCRIPT_PATH=<full path to server script that runs the server remotely>
+  export RUN_SERVER_SCRIPT_PATH=<full path to server script that runs the server remotely>
+  export USER=<ssh user name>
+  export HOSTNAME=<ssh hostname>
+```
+
+Once you added these values to your terminal please run the following command to deploy
+
+```
+bash scripts/acceptance_test.sh
+```
+
+***NOTE***
+
+Please be advised your machine must be connected by to your remote server via SSH Key. Currently, the scripts does not support passphrase ssh connection, please modify the script file to your liking
+to add this support.
+
+
+### Stretch goals
+
+Add automated scripting with ssh passphrase support.
 
 
 [//]: # (## Usage)
