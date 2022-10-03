@@ -36,14 +36,18 @@ class RedirectTest {
         IHandler redirectHandler = new Redirect();
         RequestParser requestParser = new RequestParser(dummyData());
         Request request = requestParser.parse();
+        String host = request.headers.get("Host");
         Response response = redirectHandler.handle(request);
         ResponseFormatter responseFormatter = new ResponseFormatter();
+
+        System.out.println(host);
+
 
         String locationLine =
                 new String(responseFormatter.formatResponse(response),
                         StandardCharsets.UTF_8).split(CRLF)[2];
         assertEquals(locationLine,
-                "Location: http://127.0.0.1:5000/simple_get");
+                "Location: http://" + host + "/simple_get");
     }
 
     public String dummyData() {

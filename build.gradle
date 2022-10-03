@@ -55,6 +55,10 @@ task(runServer, type: JavaExec){
     args  '5000'
 }
 
+
+jar.archiveName("http-server.jar")
+
+
 //
 //task(runClient, dependsOn: classes, type: JavaExec){
 //    mainClass = 'http.client.ClientRunner'

@@ -19,9 +19,10 @@ public class Redirect implements IHandler {
     @Override
     public Response handle(Request request) {
         if (isMethodAllowed(request.method)) {
+            String host = request.headers.get("Host");
             return responseBuilder.withStatus(MOVED_PERMANENTLY.code)
                     .withHeader("Allow: " + getAcceptedMethods())
-                    .withHeader("Location: http://127.0.0.1:5000/simple_get")
+                    .withHeader("Location: http://" + host + "/simple_get")
                     .build();
 
         } else {
