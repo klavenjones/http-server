@@ -30,7 +30,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Run Acceptance Test
-        run: bash acceptance_test.sh
+        run: bash ../../scripts/acceptance_test.sh
 
 #      - name: Run linting on main
 #        run: ./gradlew checkStyleMain
