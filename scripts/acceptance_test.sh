@@ -1,6 +1,6 @@
 
 echo "Kill All Proccesses First...."
-sleep 1
+sleep .5
 if lsof -t -i :5000
   then
     kill $(lsof -t -i :5000)
@@ -9,33 +9,33 @@ if lsof -t -i :5000
 fi
 
 echo "Run Linting On Main and Tests...."
-sleep 1
+sleep .5
 gradle checkStyleMain
 gradle checkStyleTest
 
 
 echo "Run tests for projects...."
-sleep 1
+sleep .5
 gradle test
 
 
 echo "Building Project....."
-sleep 1
+sleep .5
 gradle build
 
 
 echo "Running Project Locally...."
 java -jar $HTTP_SERVER_LIB_PATH 5000 &
-sleep 2
+sleep .5
 
 echo "Running Acceptance Tests....."
-cd http_server_spec
+cd http-server-spec
 bundle install
 rake test:implemented
 
 echo "Removing Directory From Remote Server..."
-sleep 1
-ssh $USER@$HOSTNAME rm -rf  http-server-1.0-SNAPSHOT.jar
+sleep .5
+ssh $USER@$HOSTNAME rm -rf  http-server.jar
 
 echo "Deploying new build to Remote server...."
 

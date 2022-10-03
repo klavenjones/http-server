@@ -29,14 +29,28 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Run Acceptance Test
-        run: bash acceptance_test.sh
+      - name: Run linting on test suite
+        run: ./gradlew checkStyleTest
 
-#      - name: Run linting on main
-#        run: ./gradlew checkStyleMain
-#
-#      - name: Run test suite
-#        run: ./gradlew test
-#
-#      - name: Build with Gradle wrapper
-#        run: ./gradlew build
+      - name: Run linting on main
+        run: ./gradlew checkStyleMain
+
+      - name: Run test suite
+        run: ./gradlew test
+
+      - name: Build with Gradle wrapper
+        run: ./gradlew build
+
+      - name: Run server in background
+        run: java -jar build/libs/http-server.jar 5000 &
+
+      - name: Set up Ruby 2.7
+        uses: ruby/setup-ruby@2b019609e2b0f1ea1a2bc8ca11cb82ab46ada124
+        with:
+          ruby-version: '2.7'
+
+      - name: Run Spinach acceptance tests
+        run: |
+          cd http-server-spec
+          bundle install
+          rake test:implemented
