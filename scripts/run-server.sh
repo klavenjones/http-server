@@ -6,7 +6,7 @@ function runServerInBox {
     sleep .5
   fi
   echo "Running server in the cloud, Press CTRL-C to exit. Server will continue to run in the background"
-  nohup java -jar http-server-1.0-SNAPSHOT.jar 5000 &
+  nohup java -jar http-server.jar 5000 &
 }
 
 

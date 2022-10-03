@@ -35,7 +35,7 @@ rake test:implemented
 
 echo "Removing Directory From Remote Server..."
 sleep 1
-ssh $USER@$HOSTNAME rm -rf  http-server-1.0-SNAPSHOT.jar
+ssh $USER@$HOSTNAME rm -rf  http-server.jar
 
 echo "Deploying new build to Remote server...."
 
